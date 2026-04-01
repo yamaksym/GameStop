@@ -113,11 +113,6 @@ main {
   padding-bottom: 4rem;
 }
 
-.games, .reviews, .make-a-review {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-}
 
 section {
   margin-bottom: 5rem;
@@ -142,7 +137,27 @@ section {
   background: var(--accent-color);
   border-radius: 2px;
 }
+/* Searchbar */
+.search-input {
 
+}
+.btn-submit {
+  background: linear-gradient(135deg, var(--accent-color), #daa909);
+  color: black;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  width: 100%;
+  transition: var(--transition);
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(254, 163, 2, 0.3);
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 25px rgba(254, 163, 2, 0.4);
+}
 /* Recent Search Game Cards (Style Grid) */
 .game-search-grid {
   display: grid;
@@ -186,23 +201,11 @@ section {
   font-weight: 600;
   margin: 0;
 }
-
-.btn-submit {
-  background: linear-gradient(135deg, var(--accent-color), #daa909);
-  color: black;
-  border: none;
-  padding: 1rem 2rem;
-  border-radius: 10px;
-  font-weight: 600;
-  width: 100%;
-  transition: var(--transition);
-  cursor: pointer;
-  box-shadow: 0 10px 20px rgba(254, 163, 2, 0.3);
-}
-
-.btn-submit:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 15px 25px rgba(254, 163, 2, 0.4);
+/* Search results */
+.search-results-grid {
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  gap: 2.5rem;
 }
 
 /* Footer */
