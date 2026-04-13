@@ -16,7 +16,7 @@ body {
     font-weight: 400;
     font-style: normal;
   background-color: var(--bg-color);
-  color: var(--text-primary);
+  color: var(--text-primary) !important;
   line-height: 1.6;
 }
 
@@ -222,11 +222,16 @@ section {
 /* Search results */
 .search-results-grid {
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
-  gap: 2.5rem;
-  grid-auto-flow: column;
+  justify-content: center;
 }
 
+.card mb-3 {
+  background-color: var(--bg-secondary) !important;
+  color: var(--text-primary) !important;
+}
+.text-body-secondary {
+  color: var(--text-secondary) !important;
+}
 /* Footer */
 footer {
   background: var(--bg-secondary);
