@@ -14,7 +14,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
     
     <!-- Custom Style -->
-    <link href="Style/style_catalog.css" rel="stylesheet">
+    <link href="Style/style_landing.css" rel="stylesheet">
 
     <link rel="shortcut icon" href="Img/Logo.ico" type="image/x-icon">
 </head>
@@ -55,88 +55,76 @@
   </div>
 </nav>
 <main>
-    <!--Searchbar and recent searches-->
-    <section class="search">
+<!--FAQ Search-->
+<section class="search">
         <form class="d-flex" role="search">
-            <input class="form-control me-2" type="search" placeholder="What are you looking for?" aria-label="Search"/>
+            <input class="form-control me-2" type="search" placeholder="What question do you have?" aria-label="Search"/>
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
-        <div class="recent-searches">
-            <h2 class="title">Recent searches</h2>
-            <div class="game-search-grid">
-                <div class="game-card">
-                    <img src="/IMG/CS_2.jpg" alt="Counter-Strike 2">
-                    <div class="info">
-                        <h3>Counter-Strike 2</h3>
+</section> 
+
+<!-- FAQ's -->
+    <section class="faq">
+        <h2 class="section-title">Here are the answers that we have:</h2>
+        <div class="accordion" id="reviewsAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <div class="title">Excellent Customer Service</div>
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#reviewsAccordion">
+                    <div class="accordion-body">
+
                     </div>
                 </div>
-                <div class="game-card">
-                    <img src="/IMG/Pubg.jpg" alt="PUBG Battlegrounds">
-                    <div class="info">
-                        <h3>PUBG Battlegrounds</h3>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <div class="title">Beautiful Interface</div>
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#reviewsAccordion">
+                    <div class="accordion-body">
+                        "The new design is stunning. Finding games is so much easier now and everything loads incredibly fast. The dark mode is perfect."
                     </div>
                 </div>
-                <div class="game-card">
-                    <img src="/IMG/ADOFAI.jpg" alt="A Dance of Fire and Ice">
-                    <div class="info">
-                        <h3>A Dance of Fire and Ice</h3>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <div class="title">Great selection of indies</div>
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#reviewsAccordion">
+                    <div class="accordion-body">
+                        "I love that they highlight rhythm games alongside the major AAA shooters like CS2 and PUBG. It shows they care about all genres."
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <!--Search results-->
-    <section class="search-results"> 
-        <div class="search-results-grid">
-            <div class="search-results-card">
-                <div class="card mb-3" style="max-width: 1080px;">
-                   <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="/IMG/ADOFAI.jpg" class="img-fluid rounded-start" alt="A Dance of Fire and Ice">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">A Dance of Fire and Ice</h5>
-                            <p class="card-text"><small class="text-body-secondary">119.99 UAH</small></p>
-                            <p class="card-text">A Dance of Fire and Ice is a strict rhythm game. Keep your focus as you guide two orbiting planets along a winding path without breaking their perfect equilibrium.</p>
-                        </div>
-                        </div>
-                    </div>
+
+    <!-- Feedback Form -->
+    <section class="make-a-review">
+        <div class="head-title">If you have a problem, write directly to us!</div>
+        <form>
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <input type="text" class="form-control" id="ltitle" name="ltitle" placeholder="Question">
+                </div>
+                <div class="col-md-6 form-group">
+                    <input type="email" class="form-control" id="lemail" name="lemail" placeholder="Your Email">
                 </div>
             </div>
-            <div class="search-results-card">
-                <div class="card mb-3" style="max-width: 1080px;">
-                    <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="/IMG/GD.jpg" class="img-fluid rounded-start" alt="Geometry Dash">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Geometry Dash</h5>
-                            <p class="card-text"><small class="text-body-secondary">124.99 UAH</small></p>
-                            <p class="card-text">Jump and fly your way through danger in this rhythm-based action platformer!</p>
-                        </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="form-group">
+                <textarea class="form-control" id="desc" name="desc" placeholder="Tell us more about your problem..."></textarea>
             </div>
-            <div class="search-results-card">
-                <div class="card mb-3" style="max-width: 1080px;">
-                    <div class="row g-0">
-                    <div class="col-md-4">
-                        <img src="/IMG/Muse_Dash.jpg" class="img-fluid rounded-start" alt="Muse Dash">
-                    </div>
-                    <div class="col-md-8">
-                        <div class="card-body">
-                            <h5 class="card-title">Muse Dash</h5>
-                            <p class="card-text"><small class="text-body-secondary">22.00 UAH</small></p>
-                            <p class="card-text">Paradise of parkour & rhythm game — Muse Dash!!</p>
-                        </div>
-                    </div>
-                    </div>
-                </div>
-            </div>
+            <button type="submit" class="btn-submit">Send</button>
+        </form>
     </section>
+
 </main>
 <footer>
     <div class="footer-content">
