@@ -137,13 +137,12 @@ section {
   background: var(--accent-color);
   border-radius: 2px;
 }
-
+/* Search */
 .search {
   margin-left: 1rem !important;
   margin-right: 1rem !important;
 }
 
-/* Search */
 .form-control {
   background: var(--bg-color) !important;
   border: 1px solid var(--glass-border) !important;
@@ -174,6 +173,120 @@ section {
 .btn-outline-success:hover {
   transform: translateY(-2px) !important;
   box-shadow: 0 15px 25px rgba(254, 163, 2, 0.4) !important;
+}
+
+/*FAQ*/
+.faq {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+.accordion {
+  --bs-accordion-bg: var(--bg-secondary);
+  --bs-accordion-color: var(--text-primary);
+  --bs-accordion-border-color: var(--glass-border);
+  --bs-accordion-btn-bg: var(--bg-secondary);
+  --bs-accordion-btn-color: var(--text-primary);
+  --bs-accordion-active-bg: rgba(254, 163, 2, 0.1);
+  --bs-accordion-active-color: var(--accent-hover);
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.accordion-item {
+  border: none;
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.accordion-item:last-child {
+  border-bottom: none;
+}
+
+.accordion-button {
+  padding: 1.5rem;
+  transition: var(--transition);
+}
+
+.accordion-button:focus {
+  box-shadow: none;
+}
+
+.reviewer-info {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.reviewer-info img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.reviewer-details .title {
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+/*Feedback form*/
+.feedback-form {
+  background: var(--bg-secondary);
+  margin-top: 2rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  padding: 3rem;
+  border-radius: 20px;
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.feedback-form .head-title {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.form-group {
+  margin-bottom: 1.5rem;
+}
+
+.form-control {
+  background: var(--bg-color) !important;
+  border: 1px solid var(--glass-border) !important;
+  color: var(--text-primary) !important;
+  border-radius: 10px !important;
+  transition: var(--transition) !important;
+}
+
+.form-control:focus {
+  background: var(--bg-color) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--accent-color) !important;
+  box-shadow: 0 0 0 3px rgba(254, 163, 2, 0.2) !important;
+}
+
+.form-control::placeholder {
+  color: var(--text-secondary) !important;
+}
+
+.btn-submit {
+  background: linear-gradient(135deg, var(--accent-color), #daa909);
+  color: black;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-weight: 600;
+  width: 100%;
+  transition: var(--transition);
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(254, 163, 2, 0.3);
+}
+
+.btn-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 25px rgba(254, 163, 2, 0.4);
 }
 
 

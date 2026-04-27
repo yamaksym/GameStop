@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameStop - Your Ultimate Computer Game Store</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    
+    <!-- Custom Style -->
+    <link href="Style/style_inventory.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="Img/Logo.ico" type="image/x-icon">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+  <div class="container-fluid px-4 px-lg-5">
+    <a class="navbar-brand" href="landing.html">
+        <img class="nav-logo" src="Img/Logo.png" alt="GameStop Logo">
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="catalog.html">Catalog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="inventory.html">Inventory</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="service.html">Service</a>
+        </li>
+        <li class="nav-item dropdown ms-lg-4 mt-3 mt-lg-0">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="Img/Avatar.jpg" alt="Profile" class="profile-pic me-2">
+            <span class="d-lg-none">My Account</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="#">Redeem Code</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#">Log out</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<main>
+    <section class="profile-info">
+
+    </section>
+    <section class="bought-games">
+        <div class="bought-games-grid">
+            <div class="bought-games-card">
+                <div class="card mb-3" style="max-width: 1080px;">
+                   <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/IMG/ADOFAI.jpg" class="img-fluid rounded-start" alt="A Dance of Fire and Ice">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">A Dance of Fire and Ice</h5>
+                            <p class="card-text"><small class="text-body-secondary">Owned</small></p>
+                            <p class="card-text">A Dance of Fire and Ice is a strict rhythm game. Keep your focus as you guide two orbiting planets along a winding path without breaking their perfect equilibrium.</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bought-games-card">
+                <div class="card mb-3" style="max-width: 1080px;">
+                    <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/IMG/GD.jpg" class="img-fluid rounded-start" alt="Geometry Dash">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Geometry Dash</h5>
+                            <p class="card-text"><small class="text-body-secondary">Owned</small></p>
+                            <p class="card-text">Jump and fly your way through danger in this rhythm-based action platformer!</p>
+                        </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="bought-games-card">
+                <div class="card mb-3" style="max-width: 1080px;">
+                    <div class="row g-0">
+                    <div class="col-md-4">
+                        <img src="/IMG/Muse_Dash.jpg" class="img-fluid rounded-start" alt="Muse Dash">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title">Muse Dash</h5>
+                            <p class="card-text"><small class="text-body-secondary">Owned</small></p>
+                            <p class="card-text">Paradise of parkour & rhythm game — Muse Dash!!</p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+            </div>
+    </section>
+</main>
+<footer>
+    <div class="footer-content">
+        <div class="footer-nav">
+            <a href="landing.html">Home</a>
+            <a href="catalog.html">Catalog</a>
+            <a href="service.html">Customer Service</a>
+            <a href="inventory.html">Inventory</a>
+        </div>
+        <div class="copyright">
+            <div class="logo">
+                <img src="Img/Logo.png" alt="GameStop Logo">
+            </div>
+            <div class="copyright-text">© 2026 GameStop. All rights reserved.</div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+</body>
+</html>
