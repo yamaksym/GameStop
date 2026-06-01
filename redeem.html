@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameStop - Redeem Game Code</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- Custom Style -->
+    <link href="Style/style_redeem.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="IMG/Logo.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container-fluid px-4 px-lg-5">
+            <a class="navbar-brand" href="landing.html">
+                <img class="nav-logo" src="IMG/Logo.png" alt="GameStop Logo">
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link" href="catalog.html">Catalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="inventory.html">Inventory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="service.html">Service</a>
+                    </li>
+                    <li class="nav-item dropdown ms-lg-4 mt-3 mt-lg-0">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="IMG/Avatar.jpg" alt="Profile" class="profile-pic me-2">
+                            <span class="d-lg-none">My Account</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item active" href="redeem.html">Redeem Code</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="#">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <div class="redeem-container">
+            <h1 class="page-title">Redeem Game Code</h1>
+            <p class="page-subtitle">Unlock premium computer games instantly on your GameStop account</p>
+
+            <div class="redeem-grid">
+                <!-- Left Column: Holographic 3D Card Visualizer -->
+                <div class="card-visualizer">
+                    <div class="redeem-card glow-gold" id="visualizer-card">
+                        <!-- Front Face of Card -->
+                        <div class="card-face card-front">
+                            <div class="card-logo">
+                                <img src="IMG/Logo.png" alt="GameStop Logo">
+                                <span>GameStop</span>
+                            </div>
+                            <div class="card-chip"></div>
+                            <div class="card-middle">
+                                <div class="card-status-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor" class="bi bi-gift" viewBox="0 0 16 16">
+                                        <path d="M3 2.5a2.5 2.5 0 0 1 5 0 2.5 2.5 0 0 1 5 0v.006c0 .07 0 .27-.038.494H15a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V7a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h2.038A2.968 2.968 0 0 1 3 2.506zm1.068.5H7v-.5a1.5 1.5 0 0 0-3 0c0 .085.002.274.045.43a.522.522 0 0 0 .023.07zM9 3h2.932a.56.56 0 0 0 .023-.07c.043-.156.045-.345.045-.43a1.5 1.5 0 0 0-3 0V3zM1 4v2h5V4H1zm6 0v2h2V4H7zm3 0v2h5V4h-5zM2 7v6.5a.5.5 0 0 0 .5.5h5V7H2zm6 0v7h5.5a.5.5 0 0 0 .5-.5V7H8z"/>
+                                    </svg>
+                                </div>
+                                <h3>Digital Gift Card</h3>
+                                <p>Enter promo code to activate</p>
+                            </div>
+                            <div class="card-bottom">
+                                <div class="card-holder">
+                                    <span class="card-holder-label">Account Name</span>
+                                    <span class="card-holder-name" id="card-username-display">Gamer</span>
+                                </div>
+                                <span class="card-code-placeholder" id="card-status-text">WAITING...</span>
+                            </div>
+                        </div>
+
+                        <!-- Back Face of Card (Game Poster & Metadata) -->
+                        <div class="card-face card-back">
+                            <div class="game-poster-wrapper">
+                                <img src="IMG/CS_2.jpg" alt="Game Poster" class="game-poster" id="reveal-poster">
+                                <div class="game-poster-overlay"></div>
+                                <span class="game-genre-tag" id="reveal-genre">FPS</span>
+                            </div>
+                            <div class="game-details">
+                                <div>
+                                    <h4 class="game-title" id="reveal-title">Counter-Strike 2</h4>
+                                    <p class="game-desc" id="reveal-desc">For over two decades, Counter-Strike has offered an elite competitive experience, one shaped by millions of players from across the globe.</p>
+                                </div>
+                                <div class="game-meta-bottom">
+                                    <span class="game-developer" id="reveal-developer">Developer: Valve</span>
+                                    <span class="game-status-pill" id="reveal-price">Free</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Interactive Panel -->
+                <div class="redeem-form-panel" id="action-panel">
+                    <!-- Dynamic form container -->
+                    <div id="form-content-area">
+                        <div class="form-header">
+                            <h2>Enter Promo Code</h2>
+                            <p>Codes are case-insensitive and format-flexible (e.g. ABCD-EFGH-IJKL)</p>
+                        </div>
+
+                        <form id="redeem-form" style="margin-top: 1.5rem;">
+                            <div class="code-input-group">
+                                <label class="input-label" for="code-input">Game Access Code</label>
+                                <div class="input-wrapper">
+                                    <input type="text" id="code-input" class="code-field" placeholder="XXXX-XXXX-XXXX" maxlength="20" autocomplete="off">
+                                    <div class="status-indicator-container">
+                                        <div class="status-spinner" id="checking-spinner"></div>
+                                        <span class="input-status-icon text-success-custom" id="valid-check-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"/>
+                                            </svg>
+                                        </span>
+                                        <span class="input-status-icon text-danger-custom" id="invalid-x-icon">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-exclamation-circle-fill" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z"/>
+                                            </svg>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="validation-msg" id="validation-text">Invalid code format</div>
+                            </div>
+
+                            <div class="button-panel mt-4">
+                                <button type="submit" class="btn-redeem-action" id="submit-redeem" disabled>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-unlock-fill" viewBox="0 0 16 16">
+                                        <path d="M11 1a2 2 0 0 0-2 2v4a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h5V3a3 3 0 0 1 6 0v4a.5.5 0 0 1-1 0V3a2 2 0 0 0-2-2z"/>
+                                    </svg>
+                                    <span>Claim Game</span>
+                                </button>
+                                <a href="inventory.html" class="btn-secondary-action">
+                                    <span>View My Inventory</span>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- Help & Promo Code hints panel -->
+                    <div class="codes-hint-panel">
+                        <h4>Demo Promo Codes</h4>
+                        <div class="code-pills-list">
+                            <span class="code-pill" onclick="fillCode('CS2-PLAY-FREE')">CS2-PLAY-FREE</span>
+                            <span class="code-pill" onclick="fillCode('PUBG-SURV-IVAL')">PUBG-SURV-IVAL</span>
+                            <span class="code-pill" onclick="fillCode('FORT-NITE-FREE')">FORT-NITE-FREE</span>
+                            <span class="code-pill" onclick="fillCode('HALO-CHIE-F999')">HALO-CHIE-F999</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Canvas for Confetti -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-nav">
+                <a href="landing.html">Home</a>
+                <a href="catalog.html">Catalog</a>
+                <a href="service.html">Customer Service</a>
+                <a href="inventory.html">Inventory</a>
+            </div>
+            <div class="copyright">
+                <div class="logo">
+                    <img src="IMG/Logo.png" alt="GameStop Logo">
+                </div>
+                <div class="copyright-text">© 2026 GameStop. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <!-- Global Nav state controller -->
+    <script src="Script/navbar.js"></script>
+
+    <!-- Redeem Script -->
+    <script>
+        // Redeem Database
+        const codesDB = {
+            'CS2-PLAY-FREE': {
+                id: 'cs_2',
+                title: 'Counter-Strike 2',
+                genre: 'FPS',
+                image: 'IMG/CS_2.jpg',
+                link: 'CS_2.html',
+                description: 'For over two decades, Counter-Strike has offered an elite competitive experience, one shaped by millions of players from across the globe. And now the next chapter in the CS saga is about to begin. This is Counter-Strike 2.',
+                developer: 'Valve',
+                price: 'Owned'
+            },
+            'PUBG-SURV-IVAL': {
+                id: 'pubg',
+                title: 'PUBG Battlegrounds',
+                genre: 'FPS',
+                image: 'IMG/Pubg.jpg',
+                link: 'Pubg.html',
+                description: 'Land on strategic locations, loot weapons and supplies, and survive to become the last team standing in various, diverse Battlegrounds.',
+                developer: 'Krafton',
+                price: 'Owned'
+            },
+            'FORT-NITE-FREE': {
+                id: 'fortnite',
+                title: 'Fortnite',
+                genre: 'Shooter',
+                image: 'IMG/Fortnite.jpg',
+                link: 'Fortnite.html',
+                description: 'Create, play, and battle with friends for free in Fortnite. Be the last player standing in Battle Royale and Zero Build, experience a concert or live event, or discover over a million creator-made games.',
+                developer: 'Epic Games',
+                price: 'Owned'
+            },
+            'HALO-CHIE-F999': {
+                id: 'halo',
+                title: 'Halo Infinite',
+                genre: 'FPS',
+                image: 'IMG/Halo.jpg',
+                link: 'Halo.html',
+                description: 'The legendary shooter series returns with the most expansive Master Chief campaign yet and a groundbreaking free-to-play multiplayer experience.',
+                developer: '343 Industries',
+                price: 'Owned'
+            }
+        };
+
+        // DOM elements
+        const codeInput = document.getElementById('code-input');
+        const submitRedeem = document.getElementById('submit-redeem');
+        const redeemForm = document.getElementById('redeem-form');
+        const visualizerCard = document.getElementById('visualizer-card');
+        const validationText = document.getElementById('validation-text');
+        
+        // Spinners & Status Icons
+        const checkingSpinner = document.getElementById('checking-spinner');
+        const validCheckIcon = document.getElementById('valid-check-icon');
+        const invalidXIcon = document.getElementById('invalid-x-icon');
+        
+        // Card Front Elements
+        const cardStatusText = document.getElementById('card-status-text');
+        const cardUsernameDisplay = document.getElementById('card-username-display');
+
+        // Card Back Elements (Revealed Game Info)
+        const revealPoster = document.getElementById('reveal-poster');
+        const revealGenre = document.getElementById('reveal-genre');
+        const revealTitle = document.getElementById('reveal-title');
+        const revealDesc = document.getElementById('reveal-desc');
+        const revealDeveloper = document.getElementById('reveal-developer');
+        const revealPrice = document.getElementById('reveal-price');
+
+        // State variables
+        let debounceTimer = null;
+        let matchedGame = null;
+        let codeCurrentlyEntered = "";
+
+        // On Load, update card user display
+        document.addEventListener('DOMContentLoaded', () => {
+            const username = localStorage.getItem('username') || 'Gamer';
+            cardUsernameDisplay.textContent = username;
+            
+            // Initialize Inventory in localStorage if it doesn't exist
+            initInventoryData();
+        });
+
+        // Initialize Owned Games in localStorage
+        function initInventoryData() {
+            if (!localStorage.getItem('ownedGames')) {
+                const defaultGames = [
+                    {
+                        id: 'adofai',
+                        title: 'A Dance of Fire and Ice',
+                        genre: 'Rhythm',
+                        image: 'IMG/ADOFAI.jpg',
+                        link: 'ADOFAI.html',
+                        description: 'A Dance of Fire and Ice is a strict rhythm game. Keep your focus as you guide two orbiting planets along a winding path without breaking their perfect equilibrium.',
+                        developer: '7th Beat Games',
+                        price: 'Owned'
+                    },
+                    {
+                        id: 'gd',
+                        title: 'Geometry Dash',
+                        genre: 'Rhythm',
+                        image: 'IMG/GD.jpg',
+                        link: 'GD.html',
+                        description: 'Jump and fly your way through danger in this rhythm-based action platformer!',
+                        developer: 'RobTop Games',
+                        price: 'Owned'
+                    },
+                    {
+                        id: 'muse_dash',
+                        title: 'Muse Dash',
+                        genre: 'Rhythm',
+                        image: 'IMG/Muse_Dash.jpg',
+                        link: 'Muse_Dash.html',
+                        description: 'Paradise of parkour & rhythm game — Muse Dash!!',
+                        developer: 'PeroPeroGames',
+                        price: 'Owned'
+                    }
+                ];
+                localStorage.setItem('ownedGames', JSON.stringify(defaultGames));
+            }
+        }
+
+        // Format code as user types: XXXX-XXXX-XXXX
+        codeInput.addEventListener('input', (e) => {
+            let value = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '');
+            let formatted = '';
+            
+            // Auto add hyphens
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) {
+                    formatted += '-';
+                }
+                formatted += value[i];
+            }
+            
+            codeInput.value = formatted;
+            
+            // Reset state
+            resetStatusUI();
+            
+            if (formatted.length >= 14) {
+                // Trigger typing simulation
+                checkCodeDebounced(formatted);
+            }
+        });
+
+        function resetStatusUI() {
+            matchedGame = null;
+            submitRedeem.disabled = true;
+            visualizerCard.className = 'redeem-card glow-gold';
+            cardStatusText.textContent = 'WAITING...';
+            cardStatusText.style.color = '';
+            
+            validCheckIcon.classList.remove('visible');
+            invalidXIcon.classList.remove('visible');
+            checkingSpinner.classList.remove('visible');
+            
+            validationText.classList.remove('visible');
+            validationText.className = 'validation-msg';
+            codeInput.className = 'code-field';
+        }
+
+        function checkCodeDebounced(code) {
+            clearTimeout(debounceTimer);
+            checkingSpinner.classList.add('visible');
+            
+            debounceTimer = setTimeout(() => {
+                checkingSpinner.classList.remove('visible');
+                validateCode(code);
+            }, 800); // 800ms debounce to simulate "verifying code" on servers
+        }
+
+        function validateCode(code) {
+            const normalized = code.trim().toUpperCase();
+            
+            if (codesDB[normalized]) {
+                const game = codesDB[normalized];
+                
+                // Check if already owned
+                const owned = JSON.parse(localStorage.getItem('ownedGames') || '[]');
+                const isOwned = owned.some(g => g.id === game.id);
+                
+                if (isOwned) {
+                    // Code is valid but game already owned
+                    codeInput.classList.add('is-valid');
+                    validCheckIcon.classList.add('visible');
+                    
+                    validationText.textContent = `Game already in inventory: ${game.title}`;
+                    validationText.className = 'validation-msg visible text-success-custom';
+                    
+                    cardStatusText.textContent = 'OWNED';
+                    cardStatusText.style.color = '#10b981';
+                    
+                    // Show game on back of card but keep disabled
+                    populateCardBack(game);
+                    visualizerCard.classList.add('flipped');
+                    visualizerCard.classList.add('glow-success');
+                    
+                    matchedGame = null; // Can't redeem
+                    submitRedeem.disabled = true;
+                } else {
+                    // Valid and unlockable
+                    codeInput.classList.add('is-valid');
+                    validCheckIcon.classList.add('visible');
+                    
+                    validationText.textContent = `Code matches: ${game.title}!`;
+                    validationText.className = 'validation-msg visible text-success-custom';
+                    
+                    cardStatusText.textContent = 'READY';
+                    cardStatusText.style.color = '#fea302';
+                    
+                    // Populate card back and Flip card
+                    populateCardBack(game);
+                    visualizerCard.classList.add('flipped');
+                    visualizerCard.classList.add('glow-success');
+                    
+                    matchedGame = game;
+                    submitRedeem.disabled = false;
+                }
+            } else {
+                // Invalid code
+                codeInput.classList.add('is-invalid');
+                invalidXIcon.classList.add('visible');
+                
+                validationText.textContent = 'Invalid promo code. Please check your characters.';
+                validationText.className = 'validation-msg visible text-danger-custom';
+                
+                cardStatusText.textContent = 'INVALID';
+                cardStatusText.style.color = '#ef4444';
+                
+                visualizerCard.classList.add('glow-error');
+                
+                // Shake action-panel
+                const actionPanel = document.getElementById('action-panel');
+                actionPanel.classList.add('shake');
+                setTimeout(() => actionPanel.classList.remove('shake'), 500);
+                
+                matchedGame = null;
+                submitRedeem.disabled = true;
+            }
+        }
+
+        function populateCardBack(game) {
+            revealPoster.src = game.image;
+            revealGenre.textContent = game.genre;
+            revealTitle.textContent = game.title;
+            revealDesc.textContent = game.description;
+            revealDeveloper.textContent = `Developer: ${game.developer}`;
+            revealPrice.textContent = game.price;
+        }
+
+        function fillCode(code) {
+            codeInput.value = code;
+            resetStatusUI();
+            checkCodeDebounced(code);
+        }
+
+        // Handle Claim form submit
+        redeemForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            if (!matchedGame) return;
+
+            // Save matched game to ownedGames array in LocalStorage
+            const owned = JSON.parse(localStorage.getItem('ownedGames') || '[]');
+            owned.push(matchedGame);
+            localStorage.setItem('ownedGames', JSON.stringify(owned));
+
+            // Display Celebration panel UI
+            triggerCelebration(matchedGame);
+        });
+
+        // Trigger confetti & display success screen
+        function triggerCelebration(game) {
+            startConfetti();
+            
+            const contentArea = document.getElementById('form-content-area');
+            contentArea.innerHTML = `
+                <div class="celebrate-screen">
+                    <div class="celebrate-icon-box">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-trophy-fill" viewBox="0 0 16 16">
+                            <path d="M2.5.5A.5.5 0 0 1 3 0h10a.5.5 0 0 1 .5.5c0 .538-.012 1.05-.034 1.536a3 3 0 1 1-1.133 5.89c-.078.412-.155.8-.235 1.15H8.5v2.234L11 14v1a.5.5 0 0 1-.5.5h-5a.5.5 0 0 1-.5-.5v-1l2.5-2.766V7.925H4.146a11.378 11.378 0 0 1-.235-1.15H4.15a3 3 0 1 1-1.13-5.89A20.372 20.372 0 0 1 2.5.5zm11.758 1.548a2 2 0 1 0-2.819 2.82 2 2 0 0 0 2.819-2.82zm-12 0a2 2 0 1 0 2.82 2.82 2 2 0 0 0-2.82-2.82z"/>
+                        </svg>
+                    </div>
+                    <h3>Game Unlocked!</h3>
+                    <p>Congratulations! <span class="text-white fw-bold">${game.title}</span> has been successfully added to your GameStop account.</p>
+                    
+                    <div class="button-panel w-100">
+                        <a href="inventory.html" class="btn-redeem-action justify-content-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-controller me-1" viewBox="0 0 16 16">
+                                <path d="M2 0a2 2 0 0 0-2 2v3.82c0 .89.442 1.734 1.177 2.223l2.861 1.908A1.986 1.986 0 0 0 5.176 10H10.824c.427 0 .839-.136 1.177-.389l2.861-1.908A2.67 2.67 0 0 0 16 5.82V2a2 2 0 0 0-2-2H2Zm1.854 2.854a.5.5 0 0 1 .708 0l1.5 1.5a.5.5 0 0 1-.708.708l-1.5-1.5a.5.5 0 0 1 0-.708Zm5 0a.5.5 0 0 1 .708 0l1.5 1.5a.5.5 0 0 1-.708.708l-1.5-1.5a.5.5 0 0 1 0-.708ZM4 6.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm8 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0ZM6 8.5a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Zm4 0a.5.5 0 1 1-1 0 .5.5 0 0 1 1 0Z"/>
+                            </svg>
+                            Go to Inventory
+                        </a>
+                        <button onclick="location.reload()" class="btn-secondary-action w-100">
+                            Redeem Another Code
+                        </button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Lightweight Canvas Confetti Script
+        let confettiActive = false;
+        const canvas = document.getElementById('confetti-canvas');
+        const ctx = canvas.getContext('2d');
+        const colors = ['#fea302', '#f5ba54', '#10b981', '#3b82f6', '#ec4899', '#ffffff'];
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+
+        function createParticles() {
+            for (let i = 0; i < 150; i++) {
+                particles.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height - canvas.height,
+                    r: Math.random() * 6 + 4,
+                    d: Math.random() * canvas.height,
+                    color: colors[Math.floor(Math.random() * colors.length)],
+                    tilt: Math.random() * 10 - 5,
+                    tiltAngleIncremental: Math.random() * 0.07 + 0.02,
+                    tiltAngle: 0
+                });
+            }
+        }
+
+        function drawParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach((p) => {
+                ctx.beginPath();
+                ctx.lineWidth = p.r;
+                ctx.strokeStyle = p.color;
+                ctx.moveTo(p.x + p.tilt + p.r / 2, p.y);
+                ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r / 2);
+                ctx.stroke();
+            });
+        }
+
+        function updateParticles() {
+            for (let i = 0; i < particles.length; i++) {
+                const p = particles[i];
+                p.y += (Math.cos(p.d) + 3 + p.r / 2) / 2;
+                p.tiltAngle += p.tiltAngleIncremental;
+                p.tilt = Math.sin(p.tiltAngle) * 12;
+
+                // Loop particles or clear them out
+                if (p.y > canvas.height) {
+                    particles[i] = {
+                        x: Math.random() * canvas.width,
+                        y: -20,
+                        r: p.r,
+                        d: p.d,
+                        color: p.color,
+                        tilt: p.tilt,
+                        tiltAngleIncremental: p.tiltAngleIncremental,
+                        tiltAngle: p.tiltAngle
+                    };
+                }
+            }
+        }
+
+        function animateConfetti() {
+            if (!confettiActive) return;
+            requestAnimationFrame(animateConfetti);
+            drawParticles();
+            updateParticles();
+        }
+
+        function startConfetti() {
+            confettiActive = true;
+            resizeCanvas();
+            window.addEventListener('resize', resizeCanvas);
+            createParticles();
+            animateConfetti();
+            
+            // Stop confetti after 5 seconds to free system resources
+            setTimeout(() => {
+                confettiActive = false;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles = [];
+                window.removeEventListener('resize', resizeCanvas);
+            }, 5000);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameStop - Authentication</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- Custom Style -->
+    <link href="Style/style_landing.css" rel="stylesheet">
+    <link href="Style/style_auth.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="Img/Logo.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container-fluid px-4 px-lg-5">
+            <a class="navbar-brand m-auto" href="landing.html">
+                <img class="nav-logo" src="Img/Logo.png" alt="GameStop Logo">
+            </a>
+        </div>
+    </nav>
+
+    <main class="d-flex align-items-center justify-content-center min-vh-75 py-5">
+        <div class="auth-container">
+            <!-- Glassmorphic Card -->
+            <div class="auth-card">
+                <!-- Step 1: Forms (Login / Sign Up) -->
+                <div id="step-auth" class="auth-step active">
+                    <!-- Tabs -->
+                    <div class="auth-tabs mb-4">
+                        <button type="button" class="auth-tab active" id="tab-login" onclick="switchTab('login')">Login</button>
+                        <button type="button" class="auth-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <form id="login-form" class="auth-form active" onsubmit="handleLoginSubmit(event)">
+                        <div class="form-group mb-3">
+                            <label for="login-email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="login-email" placeholder="example@email.com" required>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="login-password" class="form-label">Password</label>
+                            <input type="password" class="form-control" id="login-password" placeholder="Enter your password" required>
+                        </div>
+                        <div class="form-check mb-4 text-start">
+                            <input class="form-check-input" type="checkbox" id="remember-me">
+                            <label class="form-check-label text-secondary small" for="remember-me">
+                                Remember my device
+                            </label>
+                        </div>
+                        <button type="submit" class="btn-submit mb-3 d-flex justify-content-center align-items-center gap-2">
+                            <span>Login</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                            </svg>
+                        </button>
+                    </form>
+
+                    <!-- Sign Up Form -->
+                    <form id="signup-form" class="auth-form" onsubmit="handleSignupSubmit(event)">
+                        <div class="form-group mb-3">
+                            <label for="signup-username" class="form-label">Username</label>
+                            <input type="text" class="form-control" id="signup-username" placeholder="gamer123" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="signup-email" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="signup-email" placeholder="example@email.com" required>
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="signup-password" class="form-label">Password</label>
+                            <input type="password" class="form-control mb-1" id="signup-password" placeholder="Choose a strong password" required oninput="checkPasswordStrength(this.value)">
+                            <!-- Strength Indicator -->
+                            <div class="password-strength-container small text-secondary mb-2">
+                                <div class="strength-bar mb-1"><div class="strength-fill" id="strength-fill"></div></div>
+                                <span class="strength-text" id="strength-text">Password strength: Empty</span>
+                            </div>
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="signup-confirm-password" class="form-label">Confirm Password</label>
+                            <input type="password" class="form-control" id="signup-confirm-password" placeholder="Repeat your password" required>
+                        </div>
+                        <div class="form-check mb-4 text-start">
+                            <input class="form-check-input" type="checkbox" id="terms-agree" required>
+                            <label class="form-check-label text-secondary small" for="terms-agree">
+                                I agree to the <a href="#" class="text-accent-link">Terms of Service</a> & <a href="#" class="text-accent-link">Privacy Policy</a>
+                            </label>
+                        </div>
+                        <button type="submit" class="btn-submit mb-3 d-flex justify-content-center align-items-center gap-2">
+                            <span>Sign up</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right-short" viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M4 8a.5.5 0 0 1 .5-.5h5.793L8.146 5.354a.5.5 0 1 1 .708-.708l3 3a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708-.708L10.293 8.5H4.5A.5.5 0 0 1 4 8z"/>
+                            </svg>
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Step 2: Two-Step Verification -->
+                <div id="step-2fa" class="auth-step">
+                    <div class="text-center mb-4">
+                        <div class="auth-icon mb-3">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="var(--accent-color)" class="bi bi-shield-lock" viewBox="0 0 16 16">
+                                <path d="M5.338 1.59a61.44 61.44 0 0 0-2.837.856.481.481 0 0 0-.328.39c-.554 4.157.726 7.19 2.253 9.188a10.725 10.725 0 0 0 2.287 2.233c.346.244.652.42.893.533.12.057.218.095.293.118a.55.55 0 0 0 .101.025.615.615 0 0 0 .1-.025c.076-.023.174-.061.294-.118.24-.113.547-.29.893-.533a10.726 10.726 0 0 0 2.287-2.233c1.527-1.997 2.807-5.031 2.253-9.188a.48.48 0 0 0-.328-.39c-.651-.213-1.75-.56-2.837-.855C9.552 1.29 8.531 1.067 8 1.067c-.53 0-1.552.223-2.662.524zM8 0c.66 0 1.9.277 3.087.6 1.185.324 2.22.611 2.68.763a1.48 1.48 0 0 1 1.014 1.204c.642 4.82-.796 8.228-2.454 10.392a11.725 11.725 0 0 1-2.517 2.457A3.578 3.578 0 0 1 8 16a3.574 3.574 0 0 1-1.81-.484 11.724 11.724 0 0 1-2.517-2.457C1.996 10.82.558 7.412 1.2 2.567A1.48 1.48 0 0 1 2.213 1.36c.46-.152 1.495-.439 2.68-.763C6.1 0.278 7.34 0 8 0z"/>
+                                <path d="M9.5 6a1.5 1.5 0 0 0-2.999 0 1.5 1.5 0 0 0 1.31 1.486L7.5 9.5a.5.5 0 0 0 1 0l-.31-2.014A1.5 1.5 0 0 0 9.5 6z"/>
+                            </svg>
+                        </div>
+                        <h4 class="fw-bold">Two-Step Verification</h4>
+                        <p class="text-secondary small mt-2">We sent a verification code to <span id="display-email" class="text-primary fw-semibold">your email</span>. Please enter it below.</p>
+                    </div>
+
+                    <form id="2fa-form" onsubmit="handle2FASubmit(event)">
+                        <!-- Digit boxes -->
+                        <div class="d-flex justify-content-between gap-2 mb-4" id="otp-container">
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                            <input type="text" class="form-control otp-box" maxlength="1" pattern="[0-9]" inputmode="numeric" required>
+                        </div>
+
+                        <!-- Error Message placeholder -->
+                        <div class="text-danger small text-center mb-3 d-none" id="otp-error">
+                            Invalid verification code. Please try again.
+                        </div>
+
+                        <button type="submit" class="btn-submit mb-3 d-flex justify-content-center align-items-center gap-2">
+                            <span>Verify & Sign In</span>
+                        </button>
+                        
+                        <div class="text-center mt-3">
+                            <span class="text-secondary small">Didn't receive the code? </span>
+                            <button type="button" class="btn-link-custom small" id="btn-resend" onclick="resendCode()" disabled>Resend in 60s</button>
+                        </div>
+                        <div class="text-center mt-2">
+                            <button type="button" class="btn-link-back small d-flex align-items-center justify-content-center m-auto gap-1" onclick="goBackToForms()">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" fill="currentColor" class="bi bi-chevron-left" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/>
+                                </svg>
+                                <span>Back to Login</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- Step 3: Success -->
+                <div id="step-success" class="auth-step text-center">
+                    <div class="success-checkmark mb-4">
+                        <div class="checkmark-circle">
+                            <div class="checkmark-icon-glow"></div>
+                            <svg class="checkmark-svg" viewBox="0 0 52 52">
+                                <circle class="checkmark-circle-path" cx="26" cy="26" r="25" fill="none"/>
+                                <path class="checkmark-check-path" fill="none" d="M14.1 27.2l7.1 7.2 16.7-16.8"/>
+                            </svg>
+                        </div>
+                    </div>
+                    <h3 class="fw-bold mb-2">Welcome Back!</h3>
+                    <p class="text-secondary" id="success-message">Authentication successful. Logged in as <span id="success-username" class="text-primary fw-semibold">User</span>.</p>
+                    <div class="mt-4">
+                        <div class="spinner-border spinner-border-sm text-warning me-2" role="status"></div>
+                        <span class="text-secondary small">Redirecting to home page...</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Custom Toast Container for Mock Notifications -->
+    <div class="toast-container position-fixed top-0 end-0 p-3" style="z-index: 1100;">
+        <div id="mock-toast" class="toast custom-toast border-0 shadow-lg" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header bg-transparent text-white border-bottom-0 pb-0">
+                <span class="me-auto fw-bold d-flex align-items-center gap-2 text-warning">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-envelope-check-fill" viewBox="0 0 16 16">
+                        <path d="M.05 3.555A2 2 0 0 1 2 2h12a2 2 0 0 1 1.95 1.555L8 8.414.05 3.555zM0 4.697v7.104l5.803-3.558L0 4.697zM6.761 8.83l-6.57 4.027A2 2 0 0 0 2 14h12a2 2 0 0 0 1.808-1.144l-6.57-4.027L8 9.586l-.508-.475-.731-.281zM16 11.797V4.697l-5.803 3.546L16 11.797z"/>
+                    </svg>
+                    <span>Verification Service</span>
+                </span>
+                <button type="button" class="btn-close btn-close-white small" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body text-white pt-2">
+                Your login security code is <strong class="text-warning fs-5" id="toast-code">123456</strong>. Do not share this with anyone.
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <!-- App Scripts -->
+    <script src="Script/auth.js"></script>
+</body>
+
+</html>

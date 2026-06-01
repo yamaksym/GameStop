@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameStop - Your Ultimate Computer Game Store</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- Custom Style -->
+    <link href="Style/style_inventory.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="Img/Logo.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container-fluid px-4 px-lg-5">
+            <a class="navbar-brand" href="landing.html">
+                <img class="nav-logo" src="Img/Logo.png" alt="GameStop Logo">
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav ms-auto align-items-lg-center">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="catalog.html">Catalog</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="inventory.html">Inventory</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="service.html">Service</a>
+                    </li>
+                    <li class="nav-item dropdown ms-lg-4 mt-3 mt-lg-0">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="Img/Avatar.jpg" alt="Profile" class="profile-pic me-2">
+                            <span class="d-lg-none">My Account</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end">
+                            <li><a class="dropdown-item" href="redeem.html">Redeem Code</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="#">Log out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <main>
+        <section class="profile-info">
+            <div class="profile-container">
+                <div class="profile-avatar-container" onclick="document.getElementById('avatar-upload').click()">
+                    <img src="Img/Avatar.jpg" alt="Profile Avatar" class="profile-avatar" id="profile-avatar-img">
+                    <div class="profile-avatar-overlay">
+                        <span>Change</span>
+                    </div>
+                    <input type="file" id="avatar-upload" accept="image/*" style="display: none;"
+                        onchange="previewAvatar(event)">
+                </div>
+                <div class="profile-details">
+                    <h1 class="profile-name">YaMaksym</h1>
+                    <p class="profile-email">example@email.com</p>
+                </div>
+            </div>
+        </section>
+        <section class="bought-games">
+            <div class="bought-games-grid" id="inventory-grid">
+                <!-- JavaScript will populate cards here dynamically -->
+            </div>
+        </section>
+    </main>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-nav">
+                <a href="landing.html">Home</a>
+                <a href="catalog.html">Catalog</a>
+                <a href="service.html">Customer Service</a>
+                <a href="inventory.html">Inventory</a>
+            </div>
+            <div class="copyright">
+                <div class="logo">
+                    <img src="Img/Logo.png" alt="GameStop Logo">
+                </div>
+                <div class="copyright-text">© 2026 GameStop. All rights reserved.</div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script src="Script/navbar.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            initInventoryData();
+            loadInventory();
+        });
+
+        function initInventoryData() {
+            if (!localStorage.getItem('ownedGames')) {
+                const defaultGames = [
+                    {
+                        id: 'adofai',
+                        title: 'A Dance of Fire and Ice',
+                        genre: 'Rhythm',
+                        image: 'IMG/ADOFAI.jpg',
+                        link: 'ADOFAI.html',
+                        description: 'A Dance of Fire and Ice is a strict rhythm game. Keep your focus as you guide two orbiting planets along a winding path without breaking their perfect equilibrium.',
+                        developer: '7th Beat Games',
+                        price: 'Owned'
+                    },
+                    {
+                        id: 'gd',
+                        title: 'Geometry Dash',
+                        genre: 'Rhythm',
+                        image: 'IMG/GD.jpg',
+                        link: 'GD.html',
+                        description: 'Jump and fly your way through danger in this rhythm-based action platformer!',
+                        developer: 'RobTop Games',
+                        price: 'Owned'
+                    },
+                    {
+                        id: 'muse_dash',
+                        title: 'Muse Dash',
+                        genre: 'Rhythm',
+                        image: 'IMG/Muse_Dash.jpg',
+                        link: 'Muse_Dash.html',
+                        description: 'Paradise of parkour & rhythm game — Muse Dash!!',
+                        developer: 'PeroPeroGames',
+                        price: 'Owned'
+                    }
+                ];
+                localStorage.setItem('ownedGames', JSON.stringify(defaultGames));
+            }
+        }
+
+        function loadInventory() {
+            const grid = document.getElementById('inventory-grid');
+            if (!grid) return;
+            
+            const owned = JSON.parse(localStorage.getItem('ownedGames') || '[]');
+            
+            if (owned.length === 0) {
+                grid.innerHTML = `
+                    <div class="text-center py-5 w-100">
+                        <p class="text-secondary fs-5 mb-3">Your inventory is empty.</p>
+                        <a href="redeem.html" class="btn btn-outline-warning px-4 py-2" style="border-radius: 20px; font-weight: 600; text-decoration: none;">Redeem Game Code</a>
+                    </div>
+                `;
+                return;
+            }
+            
+            let html = '';
+            owned.forEach(game => {
+                html += `
+                    <div class="bought-games-card">
+                        <a href="${game.link}">
+                            <div class="card mb-3" style="max-width: 1080px; width: 100%;">
+                                <div class="row g-0">
+                                    <div class="col-md-4">
+                                        <img src="${game.image}" class="img-fluid rounded-start" alt="${game.title}">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="card-body">
+                                            <h5 class="card-title">${game.title}</h5>
+                                            <p class="card-text"><small class="text-body-secondary">${game.price || 'Owned'}</small></p>
+                                            <p class="card-text">${game.description}</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+
+        function previewAvatar(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                const output = document.getElementById('profile-avatar-img');
+                output.src = reader.result;
+                // Save avatar to local storage
+                localStorage.setItem('userAvatar', reader.result);
+                // Also update the navbar profile picture
+                const navPic = document.querySelector('.navbar-nav .profile-pic');
+                if (navPic) navPic.src = reader.result;
+            };
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+    </script>
+</body>
+
+</html>

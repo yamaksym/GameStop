@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameStop - Your Ultimate Computer Game Store</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    
+    <!-- Custom Style -->
+    <link href="Style/style_service.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="Img/Logo.ico" type="image/x-icon">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+  <div class="container-fluid px-4 px-lg-5">
+    <a class="navbar-brand" href="landing.html">
+        <img class="nav-logo" src="Img/Logo.png" alt="GameStop Logo">
+    </a>
+    <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav ms-auto align-items-lg-center">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="catalog.html">Catalog</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="inventory.html">Inventory</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="service.html">Service</a>
+        </li>
+        <li class="nav-item dropdown ms-lg-4 mt-3 mt-lg-0">
+          <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img src="Img/Avatar.jpg" alt="Profile" class="profile-pic me-2">
+            <span class="d-lg-none">My Account</span>
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end">
+            <li><a class="dropdown-item" href="redeem.html">Redeem Code</a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item text-danger" href="#">Log out</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<main>
+<!--FAQ Search-->
+<section class="search">
+        <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="What question do you have?" aria-label="Search"/>
+            <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+</section> 
+
+<!-- FAQ's -->
+    <section class="faq">
+        <h2 class="section-title">Here are the answers that we have:</h2>
+        <div class="accordion" id="reviewsAccordion">
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                        <div class="title">How do I buy and download a game?</div>
+                    </button>
+                </h2>
+                <div id="collapseOne" class="accordion-collapse collapse show" data-bs-parent="#reviewsAccordion">
+                    <div class="accordion-body">
+                        Just pick the game you want, press the 'Buy' button, and check out. Once your payment goes through, you’ll get a download link right away in your inventory.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                        <div class="title">What can I pay with?</div>
+                    </button>
+                </h2>
+                <div id="collapseTwo" class="accordion-collapse collapse" data-bs-parent="#reviewsAccordion">
+                    <div class="accordion-body">
+                        We accept most common payment options like credit/debit cards and online payments (like MasterCard), depending on where you are.
+                    </div>
+                </div>
+            </div>
+            <div class="accordion-item">
+                <h2 class="accordion-header">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                        <div class="title">Can I get a refund if I don’t like the game?</div>
+                    </button>
+                </h2>
+                <div id="collapseThree" class="accordion-collapse collapse" data-bs-parent="#reviewsAccordion">
+                    <div class="accordion-body">
+                        Yeah! If you run into issues or haven’t used the game yet, you can request a refund. Just click the refund button, and get the promocode for the value of the game.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Feedback Form -->
+    <section class="feedback-form">
+        <div class="head-title">If you have a problem, write directly to us!</div>
+        <form>
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <input type="text" class="form-control" id="ltitle" name="ltitle" placeholder="Question">
+                </div>
+                <div class="col-md-6 form-group">
+                    <input type="email" class="form-control" id="lemail" name="lemail" placeholder="Your Email">
+                </div>
+            </div>
+            <div class="form-group">
+                <textarea class="form-control" id="desc" name="desc" placeholder="Tell us more about your problem..."></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Send</button>
+        </form>
+    </section>
+
+</main>
+<footer>
+    <div class="footer-content">
+        <div class="footer-nav">
+            <a href="landing.html">Home</a>
+            <a href="catalog.html">Catalog</a>
+            <a href="service.html">Customer Service</a>
+            <a href="inventory.html">Inventory</a>
+        </div>
+        <div class="copyright">
+            <div class="logo">
+                <img src="Img/Logo.png" alt="GameStop Logo">
+            </div>
+            <div class="copyright-text">© 2026 GameStop. All rights reserved.</div>
+        </div>
+    </div>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+<script src="Script/navbar.js"></script>
+</body>
+</html>
