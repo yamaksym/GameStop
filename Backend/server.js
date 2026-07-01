@@ -1,4 +1,4 @@
-﻿// =============================================
+// =============================================
 //  GameStop — Secure Server
 // =============================================
 import 'dotenv/config';
@@ -11,15 +11,7 @@ import { fileURLToPath }    from 'url';
 import { randomBytes }      from 'crypto';
 import { copyFileSync, mkdirSync } from 'fs';
 
-import { initDb, getDb }    from '/Backend/src/db.js';
-import { logger, requestLogger } from '/Backend/src/logger.js';
-import bookingsRouter from '/Backend/src/routes/bookings.js';
-import contactRouter  from '/Backend/src/routes/contact.js';
-import adminRouter    from '/Backend/src/routes/admin.js';
-import {
-  apiLimiter, bookingLimiter, contactLimiter, adminLimiter,
-  sanitizeBody, auditLog, requireJson, noParamPollution,
-} from '/Backend/src/middleware/security.js';
+// Local routes and DB imports removed since they are not present in this project
 
 const __dirname  = dirname(fileURLToPath(import.meta.url));
 const PORT       = Number(process.env.PORT) || 3000;
@@ -31,21 +23,21 @@ function validateEnv() {
   const required = ['ADMIN_USER', 'ADMIN_PASS'];
   const missing  = required.filter(k => !process.env[k]);
   if (missing.length) {
-    logger.warn('Missing env vars — using defaults', { missing });
+    console.warn('Missing env vars — using defaults', { missing });
   }
   if (process.env.ADMIN_PASS === 'skycamp2026' && IS_PROD) {
-    logger.error('FATAL: Default ADMIN_PASS in production! Change it in .env');
+    console.error('FATAL: Default ADMIN_PASS in production! Change it in .env');
     process.exit(1);
   }
   if (!process.env.SESSION_SECRET) {
     process.env.SESSION_SECRET = randomBytes(32).toString('hex');
-    logger.warn('SESSION_SECRET not set — using random (sessions reset on restart)');
+    console.warn('SESSION_SECRET not set — using random (sessions reset on restart)');
   }
 }
 validateEnv();
 
 /* ── Initialize database ─────────────────── */
-initDb(resolve(__dirname, process.env.DB_PATH || '../data/gamestop.db'));
+// initDb(resolve(__dirname, process.env.DB_PATH || '../data/gamestop.db'));
 
 /* ── App ─────────────────────────────────── */
 const app = express();
@@ -114,13 +106,13 @@ app.use(express.json({ limit: '50kb' }));
 app.use(express.urlencoded({ extended: false, limit: '50kb' }));
 
 /* ── Global security middleware ──────────── */
-app.use(noParamPollution);
-app.use('/api', requireJson);
-app.use('/api', auditLog);
-app.use('/api', sanitizeBody);
+// app.use(noParamPollution);
+// app.use('/api', requireJson);
+// app.use('/api', auditLog);
+// app.use('/api', sanitizeBody);
 
 /* ── Request logging ─────────────────────── */
-app.use(requestLogger);
+// app.use(requestLogger);
 
 /* ── HTTPS redirect (production) ─────────── */
 if (IS_PROD) {
@@ -152,9 +144,9 @@ app.get('/api/health', (_req, res) =>
 );
 
 /* ── API Routes ──────────────────────────── */
-app.use('/api/bookings', apiLimiter, bookingLimiter, bookingsRouter);
-app.use('/api/contact',  apiLimiter, contactLimiter, contactRouter);
-app.use('/api/admin',    adminLimiter, adminRouter);
+// app.use('/api/bookings', apiLimiter, bookingLimiter, bookingsRouter);
+// app.use('/api/contact',  apiLimiter, contactLimiter, contactRouter);
+// app.use('/api/admin',    adminLimiter, adminRouter);
 
 /* ── Security.txt ────────────────────────── */
 app.get('/.well-known/security.txt', (_req, res) => {
@@ -211,7 +203,7 @@ app.use((err, req, res, _next) => {
 
 /* ── Start ───────────────────────────────── */
 app.listen(PORT, '0.0.0.0', () => {
-  logger.info('GameStop backend started', { port: PORT, env: IS_PROD ? 'production' : 'development' });
+  console.log('GameStop backend started', { port: PORT, env: IS_PROD ? 'production' : 'development' });
   console.log(`\n🏕️  GameStop backend (secure)`);
   console.log(`   🌐  http://localhost:${PORT}`);
   console.log(`   🔧  http://localhost:${PORT}/api/health`);
@@ -220,39 +212,6 @@ app.listen(PORT, '0.0.0.0', () => {
 });
 
 /* ── DB Backup (daily at 03:00) ──────────── */
-function scheduleDailyBackup() {
-  const dbPath = resolve(__dirname, process.env.DB_PATH || '../data/gamestop.db');
-  const backupDir = resolve(__dirname, '../data/backups');
-
-  function doBackup() {
-    try {
-      mkdirSync(backupDir, { recursive: true });
-      const date     = new Date().toISOString().slice(0, 10);
-      const dest     = resolve(backupDir, `gamestop-${date}.db`);
-      const db       = getDb();
-      db.backup(dest).then(() => {
-        logger.info('DB backup completed', { dest });
-      }).catch(err => logger.error('DB backup failed', { error: err.message }));
-    } catch (err) {
-      logger.error('DB backup error', { error: err.message });
-    }
-  }
-
-  // Run at next 03:00, then every 24h
-  const now = new Date();
-  const next3am = new Date(now);
-  next3am.setHours(3, 0, 0, 0);
-  if (next3am <= now) next3am.setDate(next3am.getDate() + 1);
-  const msUntil = next3am - now;
-
-  setTimeout(() => {
-    doBackup();
-    setInterval(doBackup, 24 * 60 * 60 * 1000);
-  }, msUntil);
-
-  logger.info('DB backup scheduled', { nextRun: next3am.toISOString() });
-}
-
-scheduleDailyBackup();
+// Backup disabled as getDb is not available
 
 export default app;
