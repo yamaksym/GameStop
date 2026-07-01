@@ -66,7 +66,7 @@
         <!--Searchbar and recent searches-->
         <section class="search">
             <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="What are you looking for?"
+                <input class="form-control me-2" id="catalog-search-input" type="search" placeholder="What are you looking for?"
                     aria-label="Search" />
                 <button class="btn btn-outline-success" type="submit">Search</button>
             </form>
@@ -102,66 +102,9 @@
         </section>
         <!--Search results-->
         <section class="search-results">
-            <div class="search-results-grid">
-                <div class="search-results-card">
-                    <a href="ADOFAI.html">
-                        <div class="card mb-3" style="max-width: 1080px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="/IMG/ADOFAI.jpg" class="img-fluid rounded-start"
-                                        alt="A Dance of Fire and Ice">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">A Dance of Fire and Ice</h5>
-                                        <p class="card-text"><small class="text-body-secondary">119.99 UAH</small></p>
-                                        <p class="card-text">A Dance of Fire and Ice is a strict rhythm game. Keep your
-                                            focus as you guide two orbiting planets along a winding path without
-                                            breaking
-                                            their perfect equilibrium.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="search-results-card">
-                    <a href="GD.html">
-                        <div class="card mb-3" style="max-width: 1080px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="/IMG/GD.jpg" class="img-fluid rounded-start" alt="Geometry Dash">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Geometry Dash</h5>
-                                        <p class="card-text"><small class="text-body-secondary">124.99 UAH</small></p>
-                                        <p class="card-text">Jump and fly your way through danger in this rhythm-based
-                                            action platformer!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-                <div class="search-results-card">
-                    <a href="Muse_Dash.html">
-                        <div class="card mb-3" style="max-width: 1080px;">
-                            <div class="row g-0">
-                                <div class="col-md-4">
-                                    <img src="/IMG/Muse_Dash.jpg" class="img-fluid rounded-start" alt="Muse Dash">
-                                </div>
-                                <div class="col-md-8">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Muse Dash</h5>
-                                        <p class="card-text"><small class="text-body-secondary">22.00 UAH</small></p>
-                                        <p class="card-text">Paradise of parkour & rhythm game — Muse Dash!!</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </a>
-                </div>
+            <div class="search-results-grid" id="catalog-grid">
+                <!-- Loaded dynamically via JavaScript -->
+            </div>
         </section>
     </main>
     <footer>
@@ -185,6 +128,155 @@
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
     <script src="Script/navbar.js"></script>
+    <script>
+        const defaultGamesList = [
+            {
+                id: 'adofai',
+                title: 'A Dance of Fire and Ice',
+                genre: 'Rhythm',
+                image: 'IMG/ADOFAI.jpg',
+                link: 'ADOFAI.html',
+                description: 'A Dance of Fire and Ice is a strict rhythm game. Keep your focus as you guide two orbiting planets along a winding path without breaking their perfect equilibrium.',
+                developer: '7th Beat Games',
+                price: '119.99 UAH',
+                blacklisted: false
+            },
+            {
+                id: 'gd',
+                title: 'Geometry Dash',
+                genre: 'Rhythm',
+                image: 'IMG/GD.jpg',
+                link: 'GD.html',
+                description: 'Jump and fly your way through danger in this rhythm-based action platformer!',
+                developer: 'RobTop Games',
+                price: '124.99 UAH',
+                blacklisted: false
+            },
+            {
+                id: 'muse_dash',
+                title: 'Muse Dash',
+                genre: 'Rhythm',
+                image: 'IMG/Muse_Dash.jpg',
+                link: 'Muse_Dash.html',
+                description: 'Paradise of parkour & rhythm game — Muse Dash!!',
+                developer: 'PeroPeroGames',
+                price: '22.00 UAH',
+                blacklisted: false
+            },
+            {
+                id: 'cs_2',
+                title: 'Counter-Strike 2',
+                genre: 'FPS',
+                image: 'IMG/CS_2.jpg',
+                link: 'CS_2.html',
+                description: 'For over two decades, Counter-Strike has offered an elite competitive experience, one shaped by millions of players from across the globe. And now the next chapter in the CS saga is about to begin. This is Counter-Strike 2.',
+                developer: 'Valve',
+                price: '49.99 UAH',
+                blacklisted: false
+            },
+            {
+                id: 'pubg',
+                title: 'PUBG Battlegrounds',
+                genre: 'FPS',
+                image: 'IMG/Pubg.jpg',
+                link: 'Pubg.html',
+                description: 'Land on strategic locations, loot weapons and supplies, and survive to become the last team standing in various, diverse Battlegrounds.',
+                developer: 'Krafton',
+                price: '39.99 UAH',
+                blacklisted: false
+            },
+            {
+                id: 'fortnite',
+                title: 'Fortnite',
+                genre: 'Shooter',
+                image: 'IMG/Fortnite.jpg',
+                link: 'Fortnite.html',
+                description: 'Create, play, and battle with friends for free in Fortnite. Be the last player standing in Battle Royale and Zero Build, experience a concert or live event, or discover over a million creator-made games.',
+                developer: 'Epic Games',
+                price: '29.99 UAH',
+                blacklisted: false
+            },
+            {
+                id: 'halo',
+                title: 'Halo Infinite',
+                genre: 'FPS',
+                image: 'IMG/Halo.jpg',
+                link: 'Halo.html',
+                description: 'The legendary shooter series returns with the most expansive Master Chief campaign yet and a groundbreaking free-to-play multiplayer experience.',
+                developer: '343 Industries',
+                price: '99.99 UAH',
+                blacklisted: false
+            }
+        ];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Initialize games if empty
+            if (!localStorage.getItem('games')) {
+                localStorage.setItem('games', JSON.stringify(defaultGamesList));
+            }
+            
+            // Initial load
+            loadCatalogGames();
+
+            // Search form interception
+            const searchForm = document.querySelector('form[role="search"]');
+            if (searchForm) {
+                searchForm.addEventListener('submit', (e) => {
+                    e.preventDefault();
+                    loadCatalogGames();
+                });
+            }
+        });
+
+        function loadCatalogGames() {
+            const grid = document.getElementById('catalog-grid');
+            if (!grid) return;
+
+            const games = JSON.parse(localStorage.getItem('games') || '[]');
+            const searchInput = document.getElementById('catalog-search-input');
+            const query = searchInput ? searchInput.value.toLowerCase() : '';
+
+            // Filter out blacklisted games, and filter by query
+            const filtered = games.filter(g => 
+                !g.blacklisted && 
+                (g.title.toLowerCase().includes(query) || g.genre.toLowerCase().includes(query) || g.description.toLowerCase().includes(query))
+            );
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="text-center py-5 w-100">
+                        <p class="text-secondary fs-5">No games match your search.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            let html = '';
+            filtered.forEach(game => {
+                html += `
+                <div class="search-results-card">
+                    <a href="${game.link}">
+                        <div class="card mb-3" style="max-width: 1080px; width: 100%;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <img src="${game.image}" class="img-fluid rounded-start" alt="${game.title}">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${game.title}</h5>
+                                        <p class="card-text"><small class="text-body-secondary">${game.price}</small></p>
+                                        <p class="card-text">${game.description}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+                `;
+            });
+            grid.innerHTML = html;
+        }
+    </script>
 </body>
 
 </html>

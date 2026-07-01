@@ -1,0 +1,1485 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameStop - Admin Control Center</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!-- Custom base styles -->
+    <link href="Style/style_landing.css" rel="stylesheet">
+    <!-- Admin panel styles -->
+    <link href="Style/style_admin.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="IMG/Logo.ico" type="image/x-icon">
+</head>
+
+<body>
+
+    <!-- Header / Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
+        <div class="container-fluid px-4 px-lg-5">
+            <!-- Left Side Logo -->
+            <a class="navbar-brand" href="landing.html">
+                <img class="nav-logo" src="Img/Logo.png" alt="GameStop Logo">
+            </a>
+            
+            <!-- Central Navigation Tabs -->
+            <div class="collapse navbar-collapse justify-content-center" id="adminNavbarTabs">
+                <ul class="admin-nav-tabs">
+                    <li><span id="tab-sales-btn" class="admin-nav-item active" onclick="switchAdminTab('sales')">Sales</span></li>
+                    <li><span id="tab-games-btn" class="admin-nav-item" onclick="switchAdminTab('games')">Games</span></li>
+                    <li><span id="tab-users-btn" class="admin-nav-item" onclick="switchAdminTab('users')">Users</span></li>
+                    <li><span id="tab-codes-btn" class="admin-nav-item" onclick="switchAdminTab('codes')">Codes</span></li>
+                </ul>
+            </div>
+
+            <!-- Right Side Profile Pic -->
+            <div class="d-flex align-items-center ms-auto">
+                <img id="header-profile-pic" src="Img/Avatar.jpg" alt="Profile" class="admin-profile-pic" onclick="location.href='inventory.html'">
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="admin-main">
+        
+        <!-- ================= SALES VIEW ================= -->
+        <div id="view-sales" class="admin-subview active">
+            <!-- Search bar -->
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="sales-search" class="admin-search-input" placeholder="Name of the game..." oninput="updateSalesChart()">
+                </div>
+            </div>
+
+            <!-- Chart panel -->
+            <div class="chart-container">
+                <!-- Chart element -->
+                <div style="height: 350px; width: 100%; position: relative;">
+                    <canvas id="salesChartCanvas"></canvas>
+                </div>
+            </div>
+
+            <!-- Chart controls -->
+            <div class="chart-buttons-row">
+                <button class="btn-chart-control" onclick="changeChartMetric('price')">Price</button>
+                <button class="btn-chart-control" onclick="changeChartMetric('sales')">Sales</button>
+                <button class="btn-chart-control" onclick="changeChartMetric('gifts')">Gifts</button>
+                <button class="btn-chart-control" onclick="changeChartMetric('returns')">Returns</button>
+                <button class="btn-chart-control" onclick="exportSalesData()">Export</button>
+            </div>
+        </div>
+
+
+        <!-- ================= GAMES VIEW ================= -->
+        <div id="view-games" class="admin-subview">
+            <!-- Search bar -->
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="games-search" class="admin-search-input" placeholder="Name of the game..." oninput="renderGamesList()">
+                </div>
+            </div>
+
+            <!-- List of Games -->
+            <div id="games-list-container">
+                <!-- Dynamically filled with JS -->
+            </div>
+
+            <!-- Add Game button -->
+            <div class="add-btn-container">
+                <button class="btn-add-item" onclick="openAddGameForm()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                    </svg>
+                    <span>Add game</span>
+                </button>
+            </div>
+        </div>
+
+
+        <!-- ================= USERS VIEW ================= -->
+        <div id="view-users" class="admin-subview">
+            <!-- Search bar -->
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="users-search" class="admin-search-input" placeholder="Username or email..." oninput="renderUsersList()">
+                </div>
+            </div>
+
+            <!-- List of Users -->
+            <div id="users-list-container">
+                <!-- Dynamically filled with JS -->
+            </div>
+        </div>
+
+
+        <!-- ================= CODES VIEW ================= -->
+        <div id="view-codes" class="admin-subview">
+            <!-- Search bar -->
+            <div class="search-container">
+                <div class="search-input-wrapper">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="search-icon" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                    </svg>
+                    <input type="text" id="codes-search" class="admin-search-input" placeholder="Name of the game..." oninput="renderCodesList()">
+                </div>
+            </div>
+
+            <!-- List of Codes -->
+            <div id="codes-list-container">
+                <!-- Dynamically filled with JS -->
+            </div>
+
+            <!-- Add Code button -->
+            <div class="add-btn-container">
+                <button class="btn-add-item" onclick="openAddCodeForm()">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2Z"/>
+                    </svg>
+                    <span>Add code</span>
+                </button>
+            </div>
+        </div>
+
+
+        <!-- ================= ADD / EDIT GAME VIEW ================= -->
+        <div id="view-add-edit-game" class="admin-subview">
+            <h2 id="game-form-title" class="subview-header">Add Game</h2>
+            
+            <form id="game-form" onsubmit="saveGame(event)">
+                <div class="form-card-layout">
+                    <!-- Left column: Thumbnail box -->
+                    <div class="thumbnail-upload-card" onclick="document.getElementById('game-thumbnail-input').click()">
+                        <input type="file" id="game-thumbnail-input" accept="image/*" style="display: none;" onchange="previewGameThumbnail(event)">
+                        <div id="thumbnail-upload-placeholder" class="thumbnail-upload-inner">
+                            <span style="font-size: 2.5rem; display: block; margin-bottom: 0.5rem;">+</span>
+                            <span>Add thumbnail...</span>
+                        </div>
+                        <img id="game-thumbnail-preview" class="thumbnail-preview d-none" alt="Thumbnail Preview">
+                    </div>
+
+                    <!-- Right column: Inputs -->
+                    <div class="form-fields-wrapper">
+                        <div class="admin-form-group">
+                            <label class="form-label" for="game-title-input">Title</label>
+                            <input type="text" id="game-title-input" class="admin-form-input" placeholder="Title..." required>
+                        </div>
+                        
+                        <div class="admin-form-group">
+                            <label class="form-label" for="game-description-input">Description</label>
+                            <textarea id="game-description-input" class="admin-form-textarea" placeholder="Description..." required></textarea>
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label class="form-label" for="game-genre-input">Genre (Rhythm, FPS, Shooter, etc.)</label>
+                            <input type="text" id="game-genre-input" class="admin-form-input" placeholder="Genre..." required>
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label class="form-label" for="game-developer-input">Developer</label>
+                            <input type="text" id="game-developer-input" class="admin-form-input" placeholder="Developer..." required>
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label class="form-label" for="game-price-input">Price</label>
+                            <input type="text" id="game-price-input" class="admin-form-input" placeholder="Price..." required>
+                        </div>
+
+                        <div class="admin-form-group">
+                            <label class="form-label">Installer file</label>
+                            <div class="installer-input-group">
+                                <input type="text" id="game-installer-input" class="admin-form-input" placeholder="Installer file..." readonly>
+                                <button type="button" id="btn-installer-action" class="btn-add-file" onclick="handleInstallerAction()">+</button>
+                            </div>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="form-actions-row">
+                            <button type="button" class="btn-form-cancel" onclick="cancelGameForm()">Cancel</button>
+                            <button type="submit" class="btn-form-save">Save</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!-- ================= ADD / EDIT CODE VIEW ================= -->
+        <div id="view-add-edit-code" class="admin-subview">
+            <h2 id="code-form-title" class="subview-header">Add Code</h2>
+
+            <form id="code-form" onsubmit="saveCode(event)">
+                <div class="form-fields-wrapper" style="max-width: 100%;">
+                    <div class="admin-form-group">
+                        <label class="give-block-title">Code:</label>
+                        <div class="installer-input-group">
+                            <input type="text" id="code-key-input" class="admin-form-input" placeholder="XXXX-XXXX-XXXX" maxlength="20" required>
+                            <button type="button" class="btn-chart-control m-0" onclick="generateRandomCode()">Generate</button>
+                        </div>
+                    </div>
+
+                    <div class="admin-form-group" style="position: relative;">
+                        <label class="give-block-title">Assigned to:</label>
+                        <input type="text" id="code-assign-search" class="admin-form-input" placeholder="Name of the game..." oninput="searchGamesForCodeAssignment()">
+                        
+                        <!-- Auto-suggest overlay results list -->
+                        <div id="code-assign-results" class="search-results-overlay">
+                            <!-- JS filled -->
+                        </div>
+                    </div>
+
+                    <!-- Selected Game Card preview -->
+                    <div id="code-assigned-game-preview" class="d-none">
+                        <div class="give-selection-preview">
+                            <!-- Filled dynamically -->
+                        </div>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="form-actions-row">
+                        <button type="button" class="btn-form-cancel" onclick="cancelCodeForm()">Cancel</button>
+                        <button type="submit" id="btn-code-submit" class="btn-form-save">Add</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+
+        <!-- ================= GIVE LICENSE VIEW ================= -->
+        <div id="view-give-license" class="admin-subview">
+            <h2 class="subview-header">Give</h2>
+
+            <form id="give-license-form" onsubmit="submitGiveLicense(event)">
+                <div class="form-fields-wrapper" style="max-width: 100%;">
+                    
+                    <!-- Search Game block -->
+                    <div class="admin-form-group" style="position: relative;">
+                        <label class="give-block-title">Give:</label>
+                        <input type="text" id="give-game-search" class="admin-form-input" placeholder="Name of the game..." oninput="searchGamesForGive()">
+                        <div id="give-game-results" class="search-results-overlay">
+                            <!-- filled by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Selected Game preview -->
+                    <div id="give-game-preview" class="give-selection-preview mb-4 d-none"></div>
+
+                    <!-- Search User block -->
+                    <div class="admin-form-group" style="position: relative;">
+                        <label class="give-block-title">To:</label>
+                        <input type="text" id="give-user-search" class="admin-form-input" placeholder="Username or email..." oninput="searchUsersForGive()">
+                        <div id="give-user-results" class="search-results-overlay">
+                            <!-- filled by JS -->
+                        </div>
+                    </div>
+
+                    <!-- Selected User preview -->
+                    <div id="give-user-preview" class="give-selection-preview mb-4 d-none"></div>
+
+                    <!-- Actions -->
+                    <div class="form-actions-row">
+                        <button type="button" class="btn-form-cancel" onclick="cancelGiveForm()">Cancel</button>
+                        <button type="submit" class="btn-form-save">Give</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+    </main>
+
+    <!-- Bottom Footer Navigation -->
+    <footer class="admin-footer">
+        <div class="admin-footer-nav">
+            <a href="landing.html" class="admin-footer-link">Home</a>
+            <a href="catalog.html" class="admin-footer-link">Catalog</a>
+            <a href="service.html" class="admin-footer-link">Customer service</a>
+            <a href="inventory.html" class="admin-footer-link">Inventory</a>
+        </div>
+    </footer>
+
+    <!-- User Inventory View Modal -->
+    <div id="user-inventory-modal" class="user-inventory-modal">
+        <div class="modal-content-card">
+            <div class="modal-header">
+                <h4 id="inventory-modal-title" class="modal-title">YaMaksym's Inventory</h4>
+                <button class="modal-close-btn" onclick="closeUserInventoryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="modal-inventory-list" class="modal-inventory-list">
+                    <!-- Dynamically filled with JS -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ChartJS via CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <!-- App navbar logic -->
+    <script src="Script/navbar.js"></script>
+
+    <!-- Main Logic Script -->
+    <script>
+        // State variables
+        let salesChartInstance = null;
+        let currentChartMetric = 'sales'; // 'price', 'sales', 'gifts', 'returns'
+        
+        let editingGameId = null;
+        let selectedFormThumbnailData = null; // base64 string
+        
+        let editingCodeId = null;
+        let selectedCodeGameId = null; // assigned game ID
+        
+        let giveSelectedGameId = null;
+        let giveSelectedUserId = null;
+        
+        let currentModalUserId = null; // user being viewed in modal
+
+        // Default Datasets (Database initial states)
+        const defaultGames = [
+            {
+                id: 'adofai',
+                title: 'A Dance of Fire and Ice',
+                genre: 'Rhythm',
+                image: 'IMG/ADOFAI.jpg',
+                link: 'ADOFAI.html',
+                description: 'A Dance of Fire and Ice is a strict rhythm game. Keep your focus as you guide two orbiting planets along a winding path without breaking their perfect equilibrium.',
+                developer: '7th Beat Games',
+                price: '119.99 UAH',
+                installer: 'A Dance of Fire and Ice Installer.exe',
+                blacklisted: false
+            },
+            {
+                id: 'gd',
+                title: 'Geometry Dash',
+                genre: 'Rhythm',
+                image: 'IMG/GD.jpg',
+                link: 'GD.html',
+                description: 'Jump and fly your way through danger in this rhythm-based action platformer!',
+                developer: 'RobTop Games',
+                price: '124.99 UAH',
+                installer: 'Geometry Dash Installer.exe',
+                blacklisted: false
+            },
+            {
+                id: 'muse_dash',
+                title: 'Muse Dash',
+                genre: 'Rhythm',
+                image: 'IMG/Muse_Dash.jpg',
+                link: 'Muse_Dash.html',
+                description: 'Paradise of parkour & rhythm game — Muse Dash!!',
+                developer: 'PeroPeroGames',
+                price: '22.00 UAH',
+                installer: 'Muse Dash Installer.exe',
+                blacklisted: false
+            },
+            {
+                id: 'cs_2',
+                title: 'Counter-Strike 2',
+                genre: 'FPS',
+                image: 'IMG/CS_2.jpg',
+                link: 'CS_2.html',
+                description: 'For over two decades, Counter-Strike has offered an elite competitive experience, one shaped by millions of players from across the globe. And now the next chapter in the CS saga is about to begin. This is Counter-Strike 2.',
+                developer: 'Valve',
+                price: '49.99 UAH',
+                installer: 'Counter-Strike 2 Installer.exe',
+                blacklisted: false
+            },
+            {
+                id: 'pubg',
+                title: 'PUBG Battlegrounds',
+                genre: 'FPS',
+                image: 'IMG/Pubg.jpg',
+                link: 'Pubg.html',
+                description: 'Land on strategic locations, loot weapons and supplies, and survive to become the last team standing in various, diverse Battlegrounds.',
+                developer: 'Krafton',
+                price: '39.99 UAH',
+                installer: 'PUBG Installer.exe',
+                blacklisted: false
+            },
+            {
+                id: 'fortnite',
+                title: 'Fortnite',
+                genre: 'Shooter',
+                image: 'IMG/Fortnite.jpg',
+                link: 'Fortnite.html',
+                description: 'Create, play, and battle with friends for free in Fortnite. Be the last player standing in Battle Royale and Zero Build, experience a concert or live event, or discover over a million creator-made games.',
+                developer: 'Epic Games',
+                price: '29.99 UAH',
+                installer: 'Fortnite Installer.exe',
+                blacklisted: false
+            },
+            {
+                id: 'halo',
+                title: 'Halo Infinite',
+                genre: 'FPS',
+                image: 'IMG/Halo.jpg',
+                link: 'Halo.html',
+                description: 'The legendary shooter series returns with the most expansive Master Chief campaign yet and a groundbreaking free-to-play multiplayer experience.',
+                developer: '343 Industries',
+                price: '99.99 UAH',
+                installer: 'Halo Infinite Installer.exe',
+                blacklisted: false
+            }
+        ];
+
+        const defaultUsers = [
+            {
+                id: 1,
+                username: 'YaMaksym',
+                email: 'maksym@gmail.com',
+                avatar: 'Img/Avatar.jpg',
+                games: ['adofai', 'gd', 'muse_dash', 'cs_2'],
+                banned: false
+            },
+            {
+                id: 2,
+                username: 'user1',
+                email: 'user1@example.com',
+                avatar: 'Img/Avatar.jpg',
+                games: ['cs_2'],
+                banned: false
+            },
+            {
+                id: 3,
+                username: 'gamer_dude',
+                email: 'gamer_dude@example.com',
+                avatar: 'Img/Avatar.jpg',
+                games: ['cs_2'],
+                banned: false
+            },
+            {
+                id: 4,
+                username: 'rhythm_master',
+                email: 'rhythm_master@example.com',
+                avatar: 'Img/Avatar.jpg',
+                games: ['adofai', 'gd'],
+                banned: false
+            }
+        ];
+
+        const defaultCodes = [
+            {
+                id: 1,
+                code: 'CS2-PLAY-FREE',
+                gameId: 'cs_2',
+                type: 'One-time use',
+                isRedeemed: 0
+            },
+            {
+                id: 2,
+                code: 'PUBG-SURV-IVAL',
+                gameId: 'pubg',
+                type: 'One-time use',
+                isRedeemed: 0
+            },
+            {
+                id: 3,
+                code: 'FORT-NITE-FREE',
+                gameId: 'fortnite',
+                type: 'One-time use',
+                isRedeemed: 0
+            },
+            {
+                id: 4,
+                code: 'HALO-CHIE-F999',
+                gameId: 'halo',
+                type: 'One-time use',
+                isRedeemed: 0
+            }
+        ];
+
+        // Initialize LocalStorage Database on load
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!localStorage.getItem('games')) {
+                localStorage.setItem('games', JSON.stringify(defaultGames));
+            }
+            if (!localStorage.getItem('admin_users')) {
+                localStorage.setItem('admin_users', JSON.stringify(defaultUsers));
+            }
+            if (!localStorage.getItem('redeem_codes')) {
+                localStorage.setItem('redeem_codes', JSON.stringify(defaultCodes));
+            }
+
+            // Sync user avatar in header if uploaded
+            const userAvatar = localStorage.getItem('userAvatar');
+            if (userAvatar) {
+                document.getElementById('header-profile-pic').src = userAvatar;
+            }
+
+            // Initial view loads
+            renderGamesList();
+            renderUsersList();
+            renderCodesList();
+            initSalesChart();
+        });
+
+
+        // ================= GENERAL NAV TABS INTERACTION =================
+        function switchAdminTab(tabName) {
+            // Hide all subviews
+            document.querySelectorAll('.admin-subview').forEach(view => {
+                view.classList.remove('active');
+            });
+            // Deactivate all tab elements
+            document.querySelectorAll('.admin-nav-item').forEach(tab => {
+                tab.classList.remove('active');
+            });
+
+            // Activate tab and view container
+            document.getElementById(`tab-${tabName}-btn`).classList.add('active');
+            document.getElementById(`view-${tabName}`).classList.add('active');
+
+            // Specific tab initializers
+            if (tabName === 'sales') {
+                setTimeout(initSalesChart, 100);
+            }
+        }
+
+
+        // ================= SALES CHART MODULE =================
+        function initSalesChart() {
+            const ctx = document.getElementById('salesChartCanvas').getContext('2d');
+            
+            // Clean up previous chart instance
+            if (salesChartInstance) {
+                salesChartInstance.destroy();
+            }
+
+            // Simulated sales timeline labels & values
+            const labels = ['June 15', 'June 16', 'June 17', 'June 18', 'June 19', 'June 20', 'June 21', 'June 22'];
+            let data = [];
+
+            if (currentChartMetric === 'sales') {
+                data = [0, 120, 100, 90, 240, 50, 150, 280]; // Image 2 shape simulation
+            } else if (currentChartMetric === 'price') {
+                data = [80, 85, 80, 95, 99, 105, 95, 110];
+            } else if (currentChartMetric === 'gifts') {
+                data = [5, 12, 10, 8, 20, 4, 15, 25];
+            } else if (currentChartMetric === 'returns') {
+                data = [1, 3, 2, 0, 4, 1, 2, 5];
+            }
+
+            // Search filter impact on metrics
+            const filterVal = document.getElementById('sales-search').value.toLowerCase();
+            if (filterVal) {
+                // scale down values to simulate filtering the dataset
+                data = data.map(v => Math.round(v * 0.45));
+            }
+
+            // Create linear gradient background
+            const fillGrad = ctx.createLinearGradient(0, 0, 0, 300);
+            fillGrad.addColorStop(0, 'rgba(254, 163, 2, 0.25)');
+            fillGrad.addColorStop(1, 'rgba(254, 163, 2, 0.0)');
+
+            salesChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: labels,
+                    datasets: [{
+                        label: currentChartMetric.toUpperCase(),
+                        data: data,
+                        borderColor: '#fea302',
+                        borderWidth: 3,
+                        backgroundColor: fillGrad,
+                        fill: true,
+                        tension: 0.1,
+                        pointBackgroundColor: '#fea302',
+                        pointBorderColor: '#0c121e',
+                        pointHoverRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false }
+                    },
+                    scales: {
+                        y: {
+                            grid: {
+                                color: 'rgba(255, 255, 255, 0.05)',
+                                drawTicks: false
+                            },
+                            ticks: {
+                                color: '#94a3b8',
+                                font: { family: 'Anta', size: 12 }
+                            },
+                            border: { dash: [4, 4] }
+                        },
+                        x: {
+                            grid: {
+                                display: false
+                            },
+                            ticks: {
+                                color: '#94a3b8',
+                                font: { family: 'Anta', size: 12 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function changeChartMetric(metric) {
+            currentChartMetric = metric;
+            initSalesChart();
+        }
+
+        function updateSalesChart() {
+            initSalesChart();
+        }
+
+        function exportSalesData() {
+            // Generate CSV mockup
+            const games = JSON.parse(localStorage.getItem('games') || '[]');
+            let csvContent = "data:text/csv;charset=utf-8,ID,Title,Developer,Price,Status\r\n";
+            games.forEach(g => {
+                csvContent += `${g.id},"${g.title}","${g.developer}",${g.price},${g.blacklisted ? 'Blacklisted' : 'Active'}\r\n`;
+            });
+
+            // Trigger download link
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", `GameZone_Sales_Export_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+
+        // ================= GAMES CRUD MODULE =================
+        function getGames() {
+            return JSON.parse(localStorage.getItem('games') || '[]');
+        }
+
+        function saveGames(games) {
+            localStorage.setItem('games', JSON.stringify(games));
+        }
+
+        function renderGamesList() {
+            const container = document.getElementById('games-list-container');
+            const searchVal = document.getElementById('games-search').value.toLowerCase();
+            const games = getGames();
+
+            let html = '';
+            const filtered = games.filter(g => g.title.toLowerCase().includes(searchVal));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="py-5 text-center text-secondary fs-5">No games match search filter.</div>`;
+                return;
+            }
+
+            filtered.forEach(game => {
+                html += `
+                <div class="admin-list-item">
+                    <!-- Thumbnail -->
+                    <div class="item-img-wrapper">
+                        <img src="${game.image}" class="item-img" alt="${game.title}">
+                    </div>
+
+                    <!-- Details -->
+                    <div class="item-details">
+                        <h3 class="item-title">${game.title}</h3>
+                        <div class="item-meta">
+                            <span class="item-price">${game.price}</span>
+                            ${game.blacklisted ? ' <span class="badge bg-danger ms-2" style="font-family: Anta;">Blacklisted</span>' : ''}
+                        </div>
+                        <p class="item-desc">"${game.description}"</p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="item-actions-column">
+                        <button class="btn-admin-action orange" onclick="openEditGameForm('${game.id}')">Edit</button>
+                        <button class="btn-admin-action orange" onclick="openGiveLicenseForm('${game.id}', null)">Give to...</button>
+                        <button class="btn-admin-action grey" onclick="toggleBlacklistGame('${game.id}')">
+                            ${game.blacklisted ? 'Whitelist' : 'Blacklist'}
+                        </button>
+                        <button class="btn-admin-action red" onclick="deleteGame('${game.id}')">Delete</button>
+                    </div>
+                </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function toggleBlacklistGame(gameId) {
+            const games = getGames();
+            const idx = games.findIndex(g => g.id === gameId);
+            if (idx !== -1) {
+                games[idx].blacklisted = !games[idx].blacklisted;
+                saveGames(games);
+                renderGamesList();
+            }
+        }
+
+        function deleteGame(gameId) {
+            if (confirm("Are you sure you want to delete this game? This will remove it from all users as well.")) {
+                const games = getGames();
+                const filtered = games.filter(g => g.id !== gameId);
+                saveGames(filtered);
+                
+                // Cascade: Remove from users owned arrays
+                const users = JSON.parse(localStorage.getItem('admin_users') || '[]');
+                users.forEach(u => {
+                    u.games = u.games.filter(gid => gid !== gameId);
+                });
+                localStorage.setItem('admin_users', JSON.stringify(users));
+
+                // Cascade: Delete assigned codes
+                const codes = JSON.parse(localStorage.getItem('redeem_codes') || '[]');
+                const filteredCodes = codes.filter(c => c.gameId !== gameId);
+                localStorage.setItem('redeem_codes', JSON.stringify(filteredCodes));
+
+                renderGamesList();
+            }
+        }
+
+        // Add/Edit Game Subview toggles
+        function openAddGameForm() {
+            editingGameId = null;
+            selectedFormThumbnailData = null;
+            document.getElementById('game-form').reset();
+            
+            document.getElementById('game-form-title').textContent = "Add Game";
+            
+            // Set thumbnail placeholder
+            document.getElementById('thumbnail-upload-placeholder').classList.remove('d-none');
+            document.getElementById('game-thumbnail-preview').classList.add('d-none');
+
+            // Set installer default installer view
+            document.getElementById('game-installer-input').value = '';
+            document.getElementById('btn-installer-action').className = 'btn-add-file';
+            document.getElementById('btn-installer-action').textContent = '+';
+
+            // Show subview container
+            showSubview('add-edit-game');
+        }
+
+        function openEditGameForm(gameId) {
+            const games = getGames();
+            const game = games.find(g => g.id === gameId);
+            if (!game) return;
+
+            editingGameId = gameId;
+            selectedFormThumbnailData = game.image; // fallback/preserve current image
+
+            document.getElementById('game-form-title').textContent = "Edit Game";
+
+            document.getElementById('game-title-input').value = game.title;
+            document.getElementById('game-description-input').value = game.description;
+            document.getElementById('game-genre-input').value = game.genre;
+            document.getElementById('game-developer-input').value = game.developer;
+            document.getElementById('game-price-input').value = game.price;
+            document.getElementById('game-installer-input').value = game.installer || '';
+
+            // Image Thumbnail setup
+            document.getElementById('thumbnail-upload-placeholder').classList.add('d-none');
+            document.getElementById('game-thumbnail-preview').src = game.image;
+            document.getElementById('game-thumbnail-preview').classList.remove('d-none');
+
+            // Setup installer file action buttons
+            const actionBtn = document.getElementById('btn-installer-action');
+            if (game.installer) {
+                actionBtn.className = 'btn-remove-file';
+                actionBtn.textContent = 'X';
+            } else {
+                actionBtn.className = 'btn-add-file';
+                actionBtn.textContent = '+';
+            }
+
+            showSubview('add-edit-game');
+        }
+
+        function previewGameThumbnail(event) {
+            const reader = new FileReader();
+            reader.onload = function () {
+                selectedFormThumbnailData = reader.result;
+                document.getElementById('thumbnail-upload-placeholder').classList.add('d-none');
+                
+                const preview = document.getElementById('game-thumbnail-preview');
+                preview.src = reader.result;
+                preview.classList.remove('d-none');
+            };
+            if (event.target.files[0]) {
+                reader.readAsDataURL(event.target.files[0]);
+            }
+        }
+
+        function handleInstallerAction() {
+            const actionBtn = document.getElementById('btn-installer-action');
+            const input = document.getElementById('game-installer-input');
+            const title = document.getElementById('game-title-input').value || 'Game';
+
+            if (actionBtn.classList.contains('btn-add-file')) {
+                // Simulate adding a setup file
+                const mockFileName = `${title} Installer.exe`;
+                input.value = mockFileName;
+                actionBtn.className = 'btn-remove-file';
+                actionBtn.textContent = 'X';
+            } else {
+                // Remove setup file
+                input.value = '';
+                actionBtn.className = 'btn-add-file';
+                actionBtn.textContent = '+';
+            }
+        }
+
+        function saveGame(event) {
+            event.preventDefault();
+            const title = document.getElementById('game-title-input').value;
+            const desc = document.getElementById('game-description-input').value;
+            const genre = document.getElementById('game-genre-input').value;
+            const developer = document.getElementById('game-developer-input').value;
+            const price = document.getElementById('game-price-input').value;
+            const installer = document.getElementById('game-installer-input').value;
+
+            const games = getGames();
+
+            if (editingGameId === null) {
+                // ADD GAME
+                const gameId = title.toLowerCase().replace(/[^a-z0-9]/g, '_');
+                
+                // Duplicate check
+                if (games.some(g => g.id === gameId)) {
+                    alert("A game with this title already exists!");
+                    return;
+                }
+
+                const newGame = {
+                    id: gameId,
+                    title: title,
+                    genre: genre,
+                    image: selectedFormThumbnailData || 'IMG/Logo.png',
+                    link: `${gameId}.html`, // mockup details page link
+                    description: desc,
+                    developer: developer,
+                    price: price,
+                    installer: installer,
+                    blacklisted: false
+                };
+                
+                games.push(newGame);
+            } else {
+                // EDIT GAME
+                const idx = games.findIndex(g => g.id === editingGameId);
+                if (idx !== -1) {
+                    games[idx].title = title;
+                    games[idx].description = desc;
+                    games[idx].genre = genre;
+                    games[idx].developer = developer;
+                    games[idx].price = price;
+                    games[idx].installer = installer;
+                    games[idx].image = selectedFormThumbnailData || games[idx].image;
+                }
+            }
+
+            saveGames(games);
+            renderGamesList();
+            showSubview('games');
+        }
+
+        function cancelGameForm() {
+            showSubview('games');
+        }
+
+
+        // ================= USERS MODULE =================
+        function getUsers() {
+            return JSON.parse(localStorage.getItem('admin_users') || '[]');
+        }
+
+        function saveUsers(users) {
+            localStorage.setItem('admin_users', JSON.stringify(users));
+        }
+
+        function renderUsersList() {
+            const container = document.getElementById('users-list-container');
+            const searchVal = document.getElementById('users-search').value.toLowerCase();
+            const users = getUsers();
+
+            let html = '';
+            const filtered = users.filter(u => 
+                u.username.toLowerCase().includes(searchVal) || 
+                u.email.toLowerCase().includes(searchVal)
+            );
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="py-5 text-center text-secondary fs-5">No users found.</div>`;
+                return;
+            }
+
+            filtered.forEach(user => {
+                // Mask email address as m*******************@gmail.com
+                const maskedEmail = maskEmailAddress(user.email);
+                
+                html += `
+                <div class="admin-list-item ${user.banned ? 'banned' : ''}">
+                    <!-- Avatar circle -->
+                    <div class="user-avatar-wrapper">
+                        <img src="${user.avatar || 'Img/Avatar.jpg'}" class="user-avatar" alt="${user.username}">
+                    </div>
+
+                    <!-- Details -->
+                    <div class="item-details">
+                        <h3 class="item-title">${user.username}</h3>
+                        <p class="item-meta text-secondary m-0">${maskedEmail}</p>
+                        <p class="item-extra">${user.games.length} games</p>
+                    </div>
+
+                    <!-- Actions -->
+                    <div class="item-actions-column">
+                        <button class="btn-admin-action orange" onclick="openUserInventoryModal(${user.id})">Inventory</button>
+                        <button class="btn-admin-action orange" onclick="openGiveLicenseForm(null, ${user.id})">Give...</button>
+                        <button class="btn-admin-action red" onclick="toggleBanUser(${user.id})">
+                            ${user.banned ? 'Unban' : 'Ban'}
+                        </button>
+                    </div>
+                </div>
+                `;
+            });
+            container.innerHTML = html;
+        }
+
+        function maskEmailAddress(email) {
+            if (!email) return '';
+            const parts = email.split('@');
+            if (parts.length !== 2) return email;
+            const prefix = parts[0];
+            const domain = parts[1];
+            if (prefix.length <= 1) return email;
+            
+            // Mask all characters except the first
+            const maskedPrefix = prefix[0] + '*'.repeat(19); // Match design email mask length
+            return `${maskedPrefix}@${domain}`;
+        }
+
+        function toggleBanUser(userId) {
+            const users = getUsers();
+            const idx = users.findIndex(u => u.id === userId);
+            if (idx !== -1) {
+                users[idx].banned = !users[idx].banned;
+                saveUsers(users);
+                renderUsersList();
+            }
+        }
+
+        // User Inventory Modal functions
+        function openUserInventoryModal(userId) {
+            currentModalUserId = userId;
+            const users = getUsers();
+            const user = users.find(u => u.id === userId);
+            if (!user) return;
+
+            document.getElementById('inventory-modal-title').textContent = `${user.username}'s Inventory`;
+            renderUserInventoryModalList(user);
+
+            document.getElementById('user-inventory-modal').classList.add('active');
+        }
+
+        function renderUserInventoryModalList(user) {
+            const listContainer = document.getElementById('modal-inventory-list');
+            const games = getGames();
+
+            if (user.games.length === 0) {
+                listContainer.innerHTML = `<p class="text-center text-secondary py-3">User owns no games.</p>`;
+                return;
+            }
+
+            let html = '';
+            user.games.forEach(gid => {
+                const game = games.find(g => g.id === gid);
+                if (game) {
+                    html += `
+                    <div class="modal-inventory-item">
+                        <img src="${game.image}" class="modal-item-img" alt="${game.title}">
+                        <div class="modal-item-info">
+                            <h5 class="modal-item-title">${game.title}</h5>
+                            <p class="modal-item-genre">${game.genre}</p>
+                        </div>
+                        <button class="btn-remove-inventory" onclick="removeGameFromUserInventory('${game.id}')">Remove</button>
+                    </div>
+                    `;
+                }
+            });
+            listContainer.innerHTML = html;
+        }
+
+        function removeGameFromUserInventory(gameId) {
+            const users = getUsers();
+            const idx = users.findIndex(u => u.id === currentModalUserId);
+            if (idx !== -1) {
+                users[idx].games = users[idx].games.filter(gid => gid !== gameId);
+                saveUsers(users);
+                
+                // If it is the currently logged in user, also update localStorage ownedGames!
+                const currentUsername = localStorage.getItem('username');
+                if (users[idx].username === currentUsername) {
+                    const ownedGames = JSON.parse(localStorage.getItem('ownedGames') || '[]');
+                    const filteredOwned = ownedGames.filter(g => g.id !== gameId);
+                    localStorage.setItem('ownedGames', JSON.stringify(filteredOwned));
+                }
+
+                renderUserInventoryModalList(users[idx]);
+                renderUsersList();
+            }
+        }
+
+        function closeUserInventoryModal() {
+            document.getElementById('user-inventory-modal').classList.remove('active');
+            currentModalUserId = null;
+        }
+
+
+        // ================= CODES MODULE =================
+        function getCodes() {
+            return JSON.parse(localStorage.getItem('redeem_codes') || '[]');
+        }
+
+        function saveCodes(codes) {
+            localStorage.setItem('redeem_codes', JSON.stringify(codes));
+        }
+
+        function renderCodesList() {
+            const container = document.getElementById('codes-list-container');
+            const searchVal = document.getElementById('codes-search').value.toLowerCase();
+            const codes = getCodes();
+            const games = getGames();
+
+            let html = '';
+            const filtered = codes.filter(c => {
+                const game = games.find(g => g.id === c.gameId);
+                return game && game.title.toLowerCase().includes(searchVal);
+            });
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div class="py-5 text-center text-secondary fs-5">No codes found.</div>`;
+                return;
+            }
+
+            filtered.forEach(codeData => {
+                const game = games.find(g => g.id === codeData.gameId);
+                if (game) {
+                    html += `
+                    <div class="admin-list-item">
+                        <!-- Thumbnail -->
+                        <div class="item-img-wrapper">
+                            <img src="${game.image}" class="item-img" alt="${game.title}">
+                        </div>
+
+                        <!-- Details -->
+                        <div class="item-details">
+                            <h3 class="item-title">${codeData.code}</h3>
+                            <p class="item-extra m-0" style="color: var(--accent-color);">Assigned to:</p>
+                            <p class="item-meta m-0">${game.title}</p>
+                            <p class="item-price m-0">${game.price}</p>
+                            <p class="item-desc">"${game.description}"</p>
+                            <p class="item-extra" style="font-weight: 600; color: #10b981;">${codeData.type}</p>
+                        </div>
+
+                        <!-- Actions -->
+                        <div class="item-actions-column">
+                            <button class="btn-admin-action orange" onclick="openEditCodeForm(${codeData.id})">Edit</button>
+                            <button class="btn-admin-action red" onclick="deleteCode(${codeData.id})">Delete</button>
+                        </div>
+                    </div>
+                    `;
+                }
+            });
+            container.innerHTML = html;
+        }
+
+        function deleteCode(codeId) {
+            if (confirm("Are you sure you want to delete this code?")) {
+                const codes = getCodes();
+                const filtered = codes.filter(c => c.id !== codeId);
+                saveCodes(filtered);
+                renderCodesList();
+            }
+        }
+
+        // Add/Edit Code Subview toggles
+        function openAddCodeForm() {
+            editingCodeId = null;
+            selectedCodeGameId = null;
+            document.getElementById('code-form').reset();
+            
+            document.getElementById('code-form-title').textContent = "Add Code";
+            document.getElementById('btn-code-submit').textContent = "Add";
+
+            // Reset selection preview
+            document.getElementById('code-assigned-game-preview').classList.add('d-none');
+
+            showSubview('add-edit-code');
+        }
+
+        function openEditCodeForm(codeId) {
+            const codes = getCodes();
+            const codeData = codes.find(c => c.id === codeId);
+            if (!codeData) return;
+
+            editingCodeId = codeId;
+            selectedCodeGameId = codeData.gameId;
+
+            document.getElementById('code-form-title').textContent = "Edit Code";
+            document.getElementById('btn-code-submit').textContent = "Save";
+
+            document.getElementById('code-key-input').value = codeData.code;
+
+            // Load assigned game preview
+            const games = getGames();
+            const game = games.find(g => g.id === codeData.gameId);
+            if (game) {
+                document.getElementById('code-assign-search').value = game.title;
+                showCodeAssignedGamePreview(game);
+            }
+
+            showSubview('add-edit-code');
+        }
+
+        function generateRandomCode() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let segment1 = '';
+            let segment2 = '';
+            let segment3 = '';
+            
+            for (let i = 0; i < 4; i++) {
+                segment1 += chars.charAt(Math.floor(Math.random() * chars.length));
+                segment2 += chars.charAt(Math.floor(Math.random() * chars.length));
+                segment3 += chars.charAt(Math.floor(Math.random() * chars.length));
+            }
+            
+            const randomCode = `${segment1}-${segment2}-${segment3}`;
+            document.getElementById('code-key-input').value = randomCode;
+        }
+
+        // Auto suggest game search in Code Form
+        function searchGamesForCodeAssignment() {
+            const query = document.getElementById('code-assign-search').value.toLowerCase();
+            const overlay = document.getElementById('code-assign-results');
+            const games = getGames();
+
+            if (!query) {
+                overlay.classList.remove('active');
+                return;
+            }
+
+            const filtered = games.filter(g => g.title.toLowerCase().includes(query));
+            if (filtered.length === 0) {
+                overlay.classList.remove('active');
+                return;
+            }
+
+            let html = '';
+            filtered.forEach(g => {
+                html += `<div class="overlay-item" onclick="selectCodeAssignedGame('${g.id}')">${g.title}</div>`;
+            });
+            overlay.innerHTML = html;
+            overlay.classList.add('active');
+        }
+
+        function selectCodeAssignedGame(gameId) {
+            selectedCodeGameId = gameId;
+            document.getElementById('code-assign-results').classList.remove('active');
+            
+            const games = getGames();
+            const game = games.find(g => g.id === gameId);
+            if (game) {
+                document.getElementById('code-assign-search').value = game.title;
+                showCodeAssignedGamePreview(game);
+            }
+        }
+
+        function showCodeAssignedGamePreview(game) {
+            const preview = document.getElementById('code-assigned-game-preview');
+            preview.querySelector('.give-selection-preview').innerHTML = `
+                <div class="d-flex align-items-center gap-3">
+                    <img src="${game.image}" style="width: 50px; height: 70px; border-radius: 8px; object-fit: cover;" alt="${game.title}">
+                    <div>
+                        <h5 class="m-0" style="font-weight: 700;">${game.title}</h5>
+                        <p class="m-0 text-secondary">${game.price}</p>
+                    </div>
+                </div>
+            `;
+            preview.classList.remove('d-none');
+        }
+
+        function saveCode(event) {
+            event.preventDefault();
+            const codeKey = document.getElementById('code-key-input').value.toUpperCase();
+            
+            if (!selectedCodeGameId) {
+                alert("Please select a game to assign this code to.");
+                return;
+            }
+
+            const codes = getCodes();
+
+            if (editingCodeId === null) {
+                // ADD CODE
+                // Check code uniqueness
+                if (codes.some(c => c.code === codeKey)) {
+                    alert("This promo code already exists!");
+                    return;
+                }
+
+                const newCode = {
+                    id: Date.now(),
+                    code: codeKey,
+                    gameId: selectedCodeGameId,
+                    type: 'One-time use',
+                    isRedeemed: 0
+                };
+                codes.push(newCode);
+            } else {
+                // EDIT CODE
+                const idx = codes.findIndex(c => c.id === editingCodeId);
+                if (idx !== -1) {
+                    codes[idx].code = codeKey;
+                    codes[idx].gameId = selectedCodeGameId;
+                }
+            }
+
+            saveCodes(codes);
+            renderCodesList();
+            showSubview('codes');
+        }
+
+        function cancelCodeForm() {
+            showSubview('codes');
+        }
+
+
+        // ================= GIVE LICENSE MODULE =================
+        function openGiveLicenseForm(gameId = null, userId = null) {
+            giveSelectedGameId = gameId;
+            giveSelectedUserId = userId;
+
+            document.getElementById('give-license-form').reset();
+            
+            // Hide previews
+            document.getElementById('give-game-preview').classList.add('d-none');
+            document.getElementById('give-user-preview').classList.add('d-none');
+
+            const games = getGames();
+            const users = getUsers();
+
+            // Set default game selection if passed
+            if (gameId) {
+                const game = games.find(g => g.id === gameId);
+                if (game) {
+                    document.getElementById('give-game-search').value = game.title;
+                    selectGiveGame(gameId);
+                }
+            }
+
+            // Set default user selection if passed
+            if (userId) {
+                const user = users.find(u => u.id === userId);
+                if (user) {
+                    document.getElementById('give-user-search').value = user.username;
+                    selectGiveUser(userId);
+                }
+            }
+
+            showSubview('give-license');
+        }
+
+        // Game lookup auto suggest
+        function searchGamesForGive() {
+            const query = document.getElementById('give-game-search').value.toLowerCase();
+            const overlay = document.getElementById('give-game-results');
+            const games = getGames();
+
+            if (!query) {
+                overlay.classList.remove('active');
+                return;
+            }
+
+            const filtered = games.filter(g => g.title.toLowerCase().includes(query));
+            if (filtered.length === 0) {
+                overlay.classList.remove('active');
+                return;
+            }
+
+            let html = '';
+            filtered.forEach(g => {
+                html += `<div class="overlay-item" onclick="selectGiveGame('${g.id}')">${g.title}</div>`;
+            });
+            overlay.innerHTML = html;
+            overlay.classList.add('active');
+        }
+
+        function selectGiveGame(gameId) {
+            giveSelectedGameId = gameId;
+            document.getElementById('give-game-results').classList.remove('active');
+
+            const games = getGames();
+            const game = games.find(g => g.id === gameId);
+            if (game) {
+                document.getElementById('give-game-search').value = game.title;
+                const preview = document.getElementById('give-game-preview');
+                preview.innerHTML = `
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="${game.image}" style="width: 50px; height: 70px; border-radius: 8px; object-fit: cover;" alt="${game.title}">
+                        <div>
+                            <h5 class="m-0" style="font-weight: 700;">${game.title}</h5>
+                            <p class="m-0 text-secondary">${game.price}</p>
+                        </div>
+                    </div>
+                `;
+                preview.classList.remove('d-none');
+            }
+        }
+
+        // User lookup auto suggest
+        function searchUsersForGive() {
+            const query = document.getElementById('give-user-search').value.toLowerCase();
+            const overlay = document.getElementById('give-user-results');
+            const users = getUsers();
+
+            if (!query) {
+                overlay.classList.remove('active');
+                return;
+            }
+
+            const filtered = users.filter(u => u.username.toLowerCase().includes(query) || u.email.toLowerCase().includes(query));
+            if (filtered.length === 0) {
+                overlay.classList.remove('active');
+                return;
+            }
+
+            let html = '';
+            filtered.forEach(u => {
+                html += `<div class="overlay-item" onclick="selectGiveUser('${u.id}')">${u.username} (${u.email})</div>`;
+            });
+            overlay.innerHTML = html;
+            overlay.classList.add('active');
+        }
+
+        function selectGiveUser(userId) {
+            giveSelectedUserId = parseInt(userId);
+            document.getElementById('give-user-results').classList.remove('active');
+
+            const users = getUsers();
+            const user = users.find(u => u.id === giveSelectedUserId);
+            if (user) {
+                document.getElementById('give-user-search').value = user.username;
+                const preview = document.getElementById('give-user-preview');
+                preview.innerHTML = `
+                    <div class="d-flex align-items-center gap-3">
+                        <img src="${user.avatar || 'Img/Avatar.jpg'}" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover;" alt="${user.username}">
+                        <div>
+                            <h5 class="m-0" style="font-weight: 700;">${user.username}</h5>
+                            <p class="m-0 text-secondary">${maskEmailAddress(user.email)}</p>
+                        </div>
+                    </div>
+                `;
+                preview.classList.remove('d-none');
+            }
+        }
+
+        function submitGiveLicense(event) {
+            event.preventDefault();
+
+            if (!giveSelectedGameId || !giveSelectedUserId) {
+                alert("Please select both a game and a user.");
+                return;
+            }
+
+            const users = getUsers();
+            const userIdx = users.findIndex(u => u.id === giveSelectedUserId);
+            
+            if (userIdx !== -1) {
+                // Check if user already owns game
+                if (users[userIdx].games.includes(giveSelectedGameId)) {
+                    alert("This user already owns this game!");
+                    return;
+                }
+
+                // Add to user inventory
+                users[userIdx].games.push(giveSelectedGameId);
+                saveUsers(users);
+
+                // If user is currently logged in, sync with localStorage ownedGames
+                const currentUsername = localStorage.getItem('username');
+                if (users[userIdx].username === currentUsername) {
+                    const games = getGames();
+                    const game = games.find(g => g.id === giveSelectedGameId);
+                    if (game) {
+                        const ownedGames = JSON.parse(localStorage.getItem('ownedGames') || '[]');
+                        // check if already in ownedGames
+                        if (!ownedGames.some(og => og.id === game.id)) {
+                            ownedGames.push({
+                                id: game.id,
+                                title: game.title,
+                                genre: game.genre,
+                                image: game.image,
+                                link: game.link,
+                                description: game.description,
+                                developer: game.developer,
+                                price: 'Owned'
+                            });
+                            localStorage.setItem('ownedGames', JSON.stringify(ownedGames));
+                        }
+                    }
+                }
+
+                alert("Game license given successfully!");
+                renderUsersList();
+                renderGamesList();
+                
+                // Return to previous active tab (users or games)
+                showSubview('users');
+            }
+        }
+
+        function cancelGiveForm() {
+            showSubview('users');
+        }
+
+
+        // ================= HELPER SUBVIEW NAVIGATION =================
+        function showSubview(subviewId) {
+            // Hide all subviews
+            document.querySelectorAll('.admin-subview').forEach(view => {
+                view.classList.remove('active');
+            });
+            // Show target
+            if (subviewId === 'sales' || subviewId === 'games' || subviewId === 'users' || subviewId === 'codes') {
+                // Main tab switching
+                switchAdminTab(subviewId);
+            } else {
+                // Overlay forms
+                document.getElementById(`view-${subviewId}`).classList.add('active');
+            }
+        }
+    </script>
+</body>
+
+</html>

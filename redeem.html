@@ -197,19 +197,28 @@
 
     <!-- Redeem Script -->
     <script>
-        // Redeem Database
-        const codesDB = {
-            'HALO-CHIE-F999': {
-                id: 'halo',
-                title: 'Halo Infinite',
-                genre: 'FPS',
-                image: 'IMG/Halo.jpg',
-                link: 'Halo.html',
-                description: 'The legendary shooter series returns with the most expansive Master Chief campaign yet and a groundbreaking free-to-play multiplayer experience.',
-                developer: '343 Industries',
-                price: 'Owned'
-            }
-        };
+        // Redeem Database - Dynamically loaded from localStorage
+        function getRedeemCodesDB() {
+            const codes = JSON.parse(localStorage.getItem('redeem_codes') || '[]');
+            const games = JSON.parse(localStorage.getItem('games') || '[]');
+            const db = {};
+            codes.forEach(c => {
+                const game = games.find(g => g.id === c.gameId);
+                if (game) {
+                    db[c.code.toUpperCase()] = {
+                        id: game.id,
+                        title: game.title,
+                        genre: game.genre,
+                        image: game.image,
+                        link: game.link,
+                        description: game.description,
+                        developer: game.developer,
+                        price: 'Owned'
+                    };
+                }
+            });
+            return db;
+        }
 
         // DOM elements
         const codeInput = document.getElementById('code-input');
@@ -310,6 +319,7 @@
         }
 
         function validateCode(code) {
+            const codesDB = getRedeemCodesDB();
             const normalized = code.trim().toUpperCase();
             
             if (codesDB[normalized]) {
