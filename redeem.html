@@ -162,17 +162,6 @@
                             </div>
                         </form>
                     </div>
-
-                    <!-- Help & Promo Code hints panel -->
-                    <div class="codes-hint-panel">
-                        <h4>Demo Promo Codes</h4>
-                        <div class="code-pills-list">
-                            <span class="code-pill" onclick="fillCode('CS2-PLAY-FREE')">CS2-PLAY-FREE</span>
-                            <span class="code-pill" onclick="fillCode('PUBG-SURV-IVAL')">PUBG-SURV-IVAL</span>
-                            <span class="code-pill" onclick="fillCode('FORT-NITE-FREE')">FORT-NITE-FREE</span>
-                            <span class="code-pill" onclick="fillCode('HALO-CHIE-F999')">HALO-CHIE-F999</span>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -210,36 +199,6 @@
     <script>
         // Redeem Database
         const codesDB = {
-            'CS2-PLAY-FREE': {
-                id: 'cs_2',
-                title: 'Counter-Strike 2',
-                genre: 'FPS',
-                image: 'IMG/CS_2.jpg',
-                link: 'CS_2.html',
-                description: 'For over two decades, Counter-Strike has offered an elite competitive experience, one shaped by millions of players from across the globe. And now the next chapter in the CS saga is about to begin. This is Counter-Strike 2.',
-                developer: 'Valve',
-                price: 'Owned'
-            },
-            'PUBG-SURV-IVAL': {
-                id: 'pubg',
-                title: 'PUBG Battlegrounds',
-                genre: 'FPS',
-                image: 'IMG/Pubg.jpg',
-                link: 'Pubg.html',
-                description: 'Land on strategic locations, loot weapons and supplies, and survive to become the last team standing in various, diverse Battlegrounds.',
-                developer: 'Krafton',
-                price: 'Owned'
-            },
-            'FORT-NITE-FREE': {
-                id: 'fortnite',
-                title: 'Fortnite',
-                genre: 'Shooter',
-                image: 'IMG/Fortnite.jpg',
-                link: 'Fortnite.html',
-                description: 'Create, play, and battle with friends for free in Fortnite. Be the last player standing in Battle Royale and Zero Build, experience a concert or live event, or discover over a million creator-made games.',
-                developer: 'Epic Games',
-                price: 'Owned'
-            },
             'HALO-CHIE-F999': {
                 id: 'halo',
                 title: 'Halo Infinite',
@@ -294,36 +253,7 @@
         function initInventoryData() {
             if (!localStorage.getItem('ownedGames')) {
                 const defaultGames = [
-                    {
-                        id: 'adofai',
-                        title: 'A Dance of Fire and Ice',
-                        genre: 'Rhythm',
-                        image: 'IMG/ADOFAI.jpg',
-                        link: 'ADOFAI.html',
-                        description: 'A Dance of Fire and Ice is a strict rhythm game. Keep your focus as you guide two orbiting planets along a winding path without breaking their perfect equilibrium.',
-                        developer: '7th Beat Games',
-                        price: 'Owned'
-                    },
-                    {
-                        id: 'gd',
-                        title: 'Geometry Dash',
-                        genre: 'Rhythm',
-                        image: 'IMG/GD.jpg',
-                        link: 'GD.html',
-                        description: 'Jump and fly your way through danger in this rhythm-based action platformer!',
-                        developer: 'RobTop Games',
-                        price: 'Owned'
-                    },
-                    {
-                        id: 'muse_dash',
-                        title: 'Muse Dash',
-                        genre: 'Rhythm',
-                        image: 'IMG/Muse_Dash.jpg',
-                        link: 'Muse_Dash.html',
-                        description: 'Paradise of parkour & rhythm game — Muse Dash!!',
-                        developer: 'PeroPeroGames',
-                        price: 'Owned'
-                    }
+                    
                 ];
                 localStorage.setItem('ownedGames', JSON.stringify(defaultGames));
             }
