@@ -140,7 +140,7 @@ app.get('/api/csrf-token', (req, res) => {
 
 /* ── Health ──────────────────────────────── */
 app.get('/api/health', (_req, res) =>
-  res.json({ ok: true, service: 'Sky Camp API', ts: new Date().toISOString() })
+  res.json({ ok: true, service: 'GameStop', ts: new Date().toISOString() })
 );
 
 /* ── API Routes ──────────────────────────── */
@@ -174,7 +174,7 @@ app.use(express.static(STATIC_DIR, {
   maxAge:    IS_PROD ? '7d' : 0,
   etag:      true,
   lastModified: true,
-  index:     'index.html',
+  index:     'landing.html',
   dotfiles:  'deny',    // block .env, .git etc
   setHeaders(res, path) {
     if (path.endsWith('.html')) {

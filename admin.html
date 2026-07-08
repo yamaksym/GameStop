@@ -12,14 +12,15 @@
     <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
 
     <!-- Custom base styles -->
-    <link href="../Style/style_landing.css" rel="stylesheet">
+    <link href="Style/style_landing.css" rel="stylesheet">
     <!-- Admin panel styles -->
-    <link href="../Style/style_admin.css" rel="stylesheet">
+    <link href="Style/style_admin.css" rel="stylesheet">
 
-    <link rel="shortcut icon" href="../IMG/Logo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="IMG/Logo.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -28,7 +29,7 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <div class="container-fluid px-4 px-lg-5">
             <!-- Left Side Logo -->
-            <a class="navbar-brand" href="../landing.html">
+            <a class="navbar-brand" href="landing.html">
                 <img class="nav-logo" src="Img/Logo.png" alt="GameStop Logo">
             </a>
             
@@ -74,11 +75,11 @@
 
             <!-- Chart controls -->
             <div class="chart-buttons-row">
-                <button class="btn-chart-control" onclick="changeChartMetric('price')">Price</button>
-                <button class="btn-chart-control" onclick="changeChartMetric('sales')">Sales</button>
-                <button class="btn-chart-control" onclick="changeChartMetric('gifts')">Gifts</button>
-                <button class="btn-chart-control" onclick="changeChartMetric('returns')">Returns</button>
-                <button class="btn-chart-control" onclick="exportSalesData()">Export</button>
+                <button id="btn-metric-price" class="btn-chart-control" onclick="changeChartMetric('price')">Price</button>
+                <button id="btn-metric-sales" class="btn-chart-control active" onclick="changeChartMetric('sales')">Sales</button>
+                <button id="btn-metric-gifts" class="btn-chart-control" onclick="changeChartMetric('gifts')">Gifts</button>
+                <button id="btn-metric-returns" class="btn-chart-control" onclick="changeChartMetric('returns')">Returns</button>
+                <button class="btn-chart-control active" onclick="exportSalesData()">Export</button>
             </div>
         </div>
 
@@ -308,10 +309,10 @@
     <!-- Bottom Footer Navigation -->
     <footer class="admin-footer">
         <div class="admin-footer-nav">
-            <a href="../landing.html" class="admin-footer-link">Home</a>
-            <a href="../catalog.html" class="admin-footer-link">Catalog</a>
-            <a href="../service.html" class="admin-footer-link">Customer service</a>
-            <a href="../inventory.html" class="admin-footer-link">Inventory</a>
+            <a href="landing.html" class="admin-footer-link">Home</a>
+            <a href="catalog.html" class="admin-footer-link">Catalog</a>
+            <a href="service.html" class="admin-footer-link">Customer service</a>
+            <a href="inventory.html" class="admin-footer-link">Inventory</a>
         </div>
     </footer>
 
@@ -339,7 +340,7 @@
         crossorigin="anonymous"></script>
 
     <!-- App navbar logic -->
-    <script src="../Script/navbar.js"></script>
+    <script src="Script/navbar.js"></script>
 
     <!-- Main Logic Script -->
     <script>
@@ -357,6 +358,7 @@
         let giveSelectedUserId = null;
         
         let currentModalUserId = null; // user being viewed in modal
+        let previousAdminTab = 'sales';
 
         // Default Datasets (Database initial states)
         const defaultGames = [
@@ -514,6 +516,14 @@
 
         // Initialize LocalStorage Database on load
         document.addEventListener('DOMContentLoaded', () => {
+            // Session validation boundary
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const isAdmin = localStorage.getItem('isAdmin') === 'true';
+            if (!isLoggedIn || !isAdmin) {
+                window.location.href = 'auth.html';
+                return;
+            }
+
             if (!localStorage.getItem('games')) {
                 localStorage.setItem('games', JSON.stringify(defaultGames));
             }
@@ -540,6 +550,8 @@
 
         // ================= GENERAL NAV TABS INTERACTION =================
         function switchAdminTab(tabName) {
+            previousAdminTab = tabName;
+            
             // Hide all subviews
             document.querySelectorAll('.admin-subview').forEach(view => {
                 view.classList.remove('active');
@@ -553,9 +565,15 @@
             document.getElementById(`tab-${tabName}-btn`).classList.add('active');
             document.getElementById(`view-${tabName}`).classList.add('active');
 
-            // Specific tab initializers
+            // Specific tab initializers / dynamic list re-rendering
             if (tabName === 'sales') {
                 setTimeout(initSalesChart, 100);
+            } else if (tabName === 'games') {
+                renderGamesList();
+            } else if (tabName === 'users') {
+                renderUsersList();
+            } else if (tabName === 'codes') {
+                renderCodesList();
             }
         }
 
@@ -646,6 +664,20 @@
 
         function changeChartMetric(metric) {
             currentChartMetric = metric;
+            
+            // Update active state on metric buttons
+            const metrics = ['price', 'sales', 'gifts', 'returns'];
+            metrics.forEach(m => {
+                const btn = document.getElementById(`btn-metric-${m}`);
+                if (btn) {
+                    if (m === metric) {
+                        btn.classList.add('active');
+                    } else {
+                        btn.classList.remove('active');
+                    }
+                }
+            });
+
             initSalesChart();
         }
 
@@ -656,13 +688,14 @@
         function exportSalesData() {
             // Generate CSV mockup
             const games = JSON.parse(localStorage.getItem('games') || '[]');
-            let csvContent = "data:text/csv;charset=utf-8,ID,Title,Developer,Price,Status\r\n";
+            let csvContent = "ID,Title,Developer,Price,Status\r\n";
             games.forEach(g => {
-                csvContent += `${g.id},"${g.title}","${g.developer}",${g.price},${g.blacklisted ? 'Blacklisted' : 'Active'}\r\n`;
+                // Safely wrap all fields in quotes to prevent spacing/comma issues in CSV
+                csvContent += `"${g.id}","${g.title}","${g.developer}","${g.price}","${g.blacklisted ? 'Blacklisted' : 'Active'}"\r\n`;
             });
 
-            // Trigger download link
-            const encodedUri = encodeURI(csvContent);
+            // Trigger download link with proper URL encoding for Unicode/Cyrillic support
+            const encodedUri = "data:text/csv;charset=utf-8," + encodeURIComponent(csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
             link.setAttribute("download", `GameZone_Sales_Export_${new Date().toISOString().slice(0,10)}.csv`);
@@ -754,6 +787,11 @@
                 const codes = JSON.parse(localStorage.getItem('redeem_codes') || '[]');
                 const filteredCodes = codes.filter(c => c.gameId !== gameId);
                 localStorage.setItem('redeem_codes', JSON.stringify(filteredCodes));
+
+                // Cascade: Remove from currently logged in user's ownedGames LocalStorage key
+                const ownedGames = JSON.parse(localStorage.getItem('ownedGames') || '[]');
+                const filteredOwned = ownedGames.filter(g => g.id !== gameId);
+                localStorage.setItem('ownedGames', JSON.stringify(filteredOwned));
 
                 renderGamesList();
             }
@@ -855,8 +893,17 @@
             const desc = document.getElementById('game-description-input').value;
             const genre = document.getElementById('game-genre-input').value;
             const developer = document.getElementById('game-developer-input').value;
-            const price = document.getElementById('game-price-input').value;
+            let price = document.getElementById('game-price-input').value.trim();
             const installer = document.getElementById('game-installer-input').value;
+
+            // Automatically format price value
+            if (price !== '') {
+                if (!isNaN(price)) {
+                    price = parseFloat(price).toFixed(2) + ' UAH';
+                } else if (!price.toUpperCase().endsWith('UAH')) {
+                    price = price + ' UAH';
+                }
+            }
 
             const games = getGames();
 
@@ -1084,8 +1131,9 @@
             filtered.forEach(codeData => {
                 const game = games.find(g => g.id === codeData.gameId);
                 if (game) {
-                    html +=
+                    html += `
                     <div class="admin-list-item">
+                        <!-- Thumbnail -->
                         <div class="item-img-wrapper">
                             <img src="${game.image}" class="item-img" alt="${game.title}">
                         </div>
@@ -1182,6 +1230,10 @@
             const overlay = document.getElementById('code-assign-results');
             const games = getGames();
 
+            // Clear preview/selection as soon as the user starts typing/editing
+            selectedCodeGameId = null;
+            document.getElementById('code-assigned-game-preview').classList.add('d-none');
+
             if (!query) {
                 overlay.classList.remove('active');
                 return;
@@ -1256,6 +1308,11 @@
                 codes.push(newCode);
             } else {
                 // EDIT CODE
+                // Check code uniqueness (excluding the current editing code)
+                if (codes.some(c => c.code === codeKey && c.id !== editingCodeId)) {
+                    alert("This promo code already exists!");
+                    return;
+                }
                 const idx = codes.findIndex(c => c.id === editingCodeId);
                 if (idx !== -1) {
                     codes[idx].code = codeKey;
@@ -1314,6 +1371,10 @@
             const overlay = document.getElementById('give-game-results');
             const games = getGames();
 
+            // Clear selection and hide preview when user edits query
+            giveSelectedGameId = null;
+            document.getElementById('give-game-preview').classList.add('d-none');
+
             if (!query) {
                 overlay.classList.remove('active');
                 return;
@@ -1360,6 +1421,10 @@
             const query = document.getElementById('give-user-search').value.toLowerCase();
             const overlay = document.getElementById('give-user-results');
             const users = getUsers();
+
+            // Clear selection and hide preview when user edits query
+            giveSelectedUserId = null;
+            document.getElementById('give-user-preview').classList.add('d-none');
 
             if (!query) {
                 overlay.classList.remove('active');
@@ -1453,12 +1518,12 @@
                 renderGamesList();
                 
                 // Return to previous active tab (users or games)
-                showSubview('users');
+                showSubview(previousAdminTab);
             }
         }
 
         function cancelGiveForm() {
-            showSubview('users');
+            showSubview(previousAdminTab);
         }
 
 
