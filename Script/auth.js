@@ -152,24 +152,40 @@ function resendCode() {
 }
 
 // Login Submit
-function handleLoginSubmit(event) {
+async function handleLoginSubmit(event) {
     event.preventDefault();
     const email = document.getElementById('login-email').value;
+    const password = document.getElementById('login-password').value;
     
-    // Set mock user data (extracting username from email prefix for display)
-    userData.email = email;
-    userData.username = email.split('@')[0];
-    
-    // Setup 2FA Screen
-    displayEmail.textContent = email;
-    sendMock2FACode(email);
-    startResendTimer();
-    
-    transitionToStep('2fa');
+    try {
+        const res = await fetch('/api/auth/login', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        });
+        const data = await res.json();
+        
+        if (!res.ok || !data.ok) {
+            alert(data.error || 'Login failed');
+            return;
+        }
+        
+        userData.email = email;
+        userData.username = email.split('@')[0];
+        
+        // Setup 2FA Screen
+        displayEmail.textContent = email;
+        sendMock2FACode(email);
+        startResendTimer();
+        
+        transitionToStep('2fa');
+    } catch (err) {
+        alert('Server error');
+    }
 }
 
 // Sign Up Submit
-function handleSignupSubmit(event) {
+async function handleSignupSubmit(event) {
     event.preventDefault();
     const username = document.getElementById('signup-username').value;
     const email = document.getElementById('signup-email').value;
@@ -181,15 +197,31 @@ function handleSignupSubmit(event) {
         return;
     }
     
-    userData.username = username;
-    userData.email = email;
-    
-    // Setup 2FA Screen
-    displayEmail.textContent = email;
-    sendMock2FACode(email);
-    startResendTimer();
-    
-    transitionToStep('2fa');
+    try {
+        const res = await fetch('/api/auth/signup', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
+        });
+        const data = await res.json();
+        
+        if (!res.ok || !data.ok) {
+            alert(data.error || 'Signup failed');
+            return;
+        }
+
+        userData.username = username;
+        userData.email = email;
+        
+        // Setup 2FA Screen
+        displayEmail.textContent = email;
+        sendMock2FACode(email);
+        startResendTimer();
+        
+        transitionToStep('2fa');
+    } catch (err) {
+        alert('Server error');
+    }
 }
 
 // Go Back
@@ -246,7 +278,7 @@ otpBoxes.forEach((box, index) => {
 });
 
 // Verification Submit
-function handle2FASubmit(event) {
+async function handle2FASubmit(event) {
     event.preventDefault();
     
     // Retrieve code
@@ -255,8 +287,34 @@ function handle2FASubmit(event) {
         enteredCode += box.value;
     });
     
-    if (enteredCode === generatedCode || enteredCode === '123456') { // Allow 123456 as a backup bypass code
+    try {
+        const res = await fetch('/api/auth/verify', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: userData.email, code: enteredCode, generatedCode })
+        });
+        const data = await res.json();
+        
+        if (!res.ok || !data.ok) {
+            // Error Shake Logic
+            otpContainer.classList.add('shake');
+            otpError.classList.remove('d-none');
+            otpBoxes.forEach(b => {
+                b.classList.add('is-invalid');
+                b.value = ''; // clear out
+            });
+            otpBoxes[0].focus();
+
+            setTimeout(() => {
+                otpContainer.classList.remove('shake');
+            }, 500);
+            return;
+        }
+        
         // Success Logic
+        if (data.user && data.user.username) {
+            userData.username = data.user.username;
+        }
         otpError.classList.add('d-none');
         otpBoxes.forEach(b => {
             b.classList.remove('is-invalid');
@@ -287,24 +345,13 @@ function handle2FASubmit(event) {
             if (isAdmin) {
                 window.location.href = 'admin_choice.html';
             } else {
-                // Check where to redirect (default: landing.html)
-                const redirectUrl = localStorage.getItem('redirectAfterLogin') || 'landing.html';
+                // Check where to redirect (default: index.html)
+                const redirectUrl = localStorage.getItem('redirectAfterLogin') || 'index.html';
                 localStorage.removeItem('redirectAfterLogin');
                 window.location.href = redirectUrl;
             }
         }, 3000);
-    } else {
-        // Error Shake Logic
-        otpContainer.classList.add('shake');
-        otpError.classList.remove('d-none');
-        otpBoxes.forEach(b => {
-            b.classList.add('is-invalid');
-            b.value = ''; // clear out
-        });
-        otpBoxes[0].focus();
-
-        setTimeout(() => {
-            otpContainer.classList.remove('shake');
-        }, 500);
+    } catch (err) {
+        alert('Server error');
     }
 }

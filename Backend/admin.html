@@ -12,15 +12,14 @@
     <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
 
     <!-- Bootstrap -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom base styles -->
-    <link href="../../Style/style_landing.css" rel="stylesheet">
+    <link href="../Style/style_landing.css" rel="stylesheet">
     <!-- Admin panel styles -->
-    <link href="../../Style/style_admin.css" rel="stylesheet">
+    <link href="../Style/style_admin.css" rel="stylesheet">
 
-    <link rel="shortcut icon" href="../../IMG/Logo.ico" type="image/x-icon">
+    <link rel="shortcut icon" href="../IMG/Logo.ico" type="image/x-icon">
 </head>
 
 <body>
@@ -29,8 +28,8 @@
     <nav class="navbar navbar-expand-lg navbar-dark bg-transparent">
         <div class="container-fluid px-4 px-lg-5">
             <!-- Left Side Logo -->
-            <a class="navbar-brand" href="../../landing.html">
-                <img class="nav-logo" src="Img/Logo.png" alt="GameStop Logo">
+            <a class="navbar-brand" href="../index.html">
+                <img class="nav-logo" src="../Img/Logo.png" alt="GameStop Logo">
             </a>
             
             <!-- Central Navigation Tabs -->
@@ -309,10 +308,10 @@
     <!-- Bottom Footer Navigation -->
     <footer class="admin-footer">
         <div class="admin-footer-nav">
-            <a href="../../landing.html" class="admin-footer-link">Home</a>
-            <a href="../../catalog.html" class="admin-footer-link">Catalog</a>
-            <a href="../../service.html" class="admin-footer-link">Customer service</a>
-            <a href="../../inventory.html" class="admin-footer-link">Inventory</a>
+            <a href="../index.html" class="admin-footer-link">Home</a>
+            <a href="../catalog.html" class="admin-footer-link">Catalog</a>
+            <a href="../service.html" class="admin-footer-link">Customer service</a>
+            <a href="../inventory.html" class="admin-footer-link">Inventory</a>
         </div>
     </footer>
 
@@ -335,12 +334,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <!-- Bootstrap Bundle JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
 
     <!-- App navbar logic -->
-    <script src="../../Script/navbar.js"></script>
+    <script src="../Script/navbar.js"></script>
 
     <!-- Main Logic Script -->
     <script>
@@ -545,6 +544,8 @@
             document.querySelectorAll('.admin-subview').forEach(view => {
                 view.classList.remove('active');
             });
+
+
             // Deactivate all tab elements
             document.querySelectorAll('.admin-nav-item').forEach(tab => {
                 tab.classList.remove('active');
@@ -1085,9 +1086,8 @@
             filtered.forEach(codeData => {
                 const game = games.find(g => g.id === codeData.gameId);
                 if (game) {
-                    html += `
+                    html +=
                     <div class="admin-list-item">
-                        <!-- Thumbnail -->
                         <div class="item-img-wrapper">
                             <img src="${game.image}" class="item-img" alt="${game.title}">
                         </div>
@@ -1275,7 +1275,6 @@
         }
 
 
-        // ================= GIVE LICENSE MODULE =================
         function openGiveLicenseForm(gameId = null, userId = null) {
             giveSelectedGameId = gameId;
             giveSelectedUserId = userId;
@@ -1362,6 +1361,7 @@
             const query = document.getElementById('give-user-search').value.toLowerCase();
             const overlay = document.getElementById('give-user-results');
             const users = getUsers();
+
 
             if (!query) {
                 overlay.classList.remove('active');
@@ -1464,7 +1464,7 @@
         }
 
 
-        // ================= HELPER SUBVIEW NAVIGATION =================
+
         function showSubview(subviewId) {
             // Hide all subviews
             document.querySelectorAll('.admin-subview').forEach(view => {
