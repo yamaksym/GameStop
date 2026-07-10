@@ -50,11 +50,11 @@ app.use(helmet({
     useDefaults: false,
     directives: {
       defaultSrc:       ["'self'"],
-      scriptSrc:        ["'self'", "'unsafe-inline'"],  // inline scripts for admin panel
-      styleSrc:         ["'self'", "'unsafe-inline'", 'fonts.googleapis.com'],
+      scriptSrc:        ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],  // inline scripts for admin panel
+      styleSrc:         ["'self'", "'unsafe-inline'", 'fonts.googleapis.com', 'https://cdn.jsdelivr.net'],
       fontSrc:          ["'self'", 'fonts.gstatic.com'],
       imgSrc:           ["'self'", 'data:', 'https://lh3.googleusercontent.com'],
-      connectSrc:       ["'self'"],  // no external API calls from browser
+      connectSrc:       ["'self'", 'https://cdn.jsdelivr.net'],  // no external API calls from browser (except maps)
       objectSrc:        ["'none'"],
       baseUri:          ["'self'"],
       formAction:       ["'self'"],
@@ -174,7 +174,7 @@ app.use(express.static(STATIC_DIR, {
   maxAge:    IS_PROD ? '7d' : 0,
   etag:      true,
   lastModified: true,
-  index:     'landing.html',
+  index:     'index.html',
   dotfiles:  'deny',    // block .env, .git etc
   setHeaders(res, path) {
     if (path.endsWith('.html')) {

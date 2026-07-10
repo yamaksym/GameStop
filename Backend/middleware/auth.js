@@ -276,8 +276,8 @@ function handle2FASubmit(event) {
 
         // Redirect after delay
         setTimeout(() => {
-            // Check where to redirect (default: landing.html)
-            const redirectUrl = localStorage.getItem('redirectAfterLogin') || 'landing.html';
+            // Check where to redirect (default: index.html)
+            const redirectUrl = localStorage.getItem('redirectAfterLogin') || 'index.html';
             localStorage.removeItem('redirectAfterLogin');
             window.location.href = redirectUrl;
         }, 3000);

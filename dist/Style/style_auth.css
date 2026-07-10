@@ -1,0 +1,315 @@
+/* Authentication Styles */
+
+.auth-container {
+    width: 100%;
+    max-width: 450px;
+    padding: 1.5rem;
+}
+
+.auth-card {
+    background: rgba(22, 27, 34, 0.75);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 24px;
+    padding: 3rem 2.5rem;
+    box-shadow: 0 30px 60px rgba(0, 0, 0, 0.4);
+    text-align: center;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Steps Transition */
+.auth-step {
+    display: none;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+}
+
+.auth-step.active {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Tabs for Login / Register */
+.auth-tabs {
+    display: flex;
+    background: rgba(12, 16, 23, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 12px;
+    padding: 4px;
+    margin-bottom: 2rem;
+}
+
+.auth-tab {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 10px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: var(--transition);
+}
+
+.auth-tab:hover {
+    color: var(--text-primary);
+}
+
+.auth-tab.active {
+    background: var(--accent-color);
+    color: #000 !important;
+    box-shadow: 0 4px 12px rgba(254, 163, 2, 0.25);
+}
+
+/* Form Styles */
+.auth-form {
+    display: none;
+    text-align: left;
+}
+
+.auth-form.active {
+    display: block;
+}
+
+.form-label {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.form-control {
+    background: rgba(12, 16, 23, 0.6) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: var(--text-primary) !important;
+    padding: 0.85rem 1.2rem !important;
+    border-radius: 12px !important;
+    font-size: 0.95rem !important;
+}
+
+.form-control:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 0 3px rgba(254, 163, 2, 0.2) !important;
+}
+
+.form-check-input {
+    background-color: rgba(12, 16, 23, 0.6) !important;
+    border-color: rgba(255, 255, 255, 0.2) !important;
+    cursor: pointer;
+}
+
+.form-check-input:checked {
+    background-color: var(--accent-color) !important;
+    border-color: var(--accent-color) !important;
+}
+
+.form-check-label {
+    user-select: none;
+    cursor: pointer;
+}
+
+/* Links */
+.text-accent-link {
+    color: var(--accent-color) !important;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.text-accent-link:hover {
+    color: var(--accent-hover) !important;
+    text-decoration: underline !important;
+}
+
+/* Password Strength Indicator */
+.strength-bar {
+    height: 4px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 2px;
+    overflow: hidden;
+}
+
+.strength-fill {
+    height: 100%;
+    width: 0%;
+    border-radius: 2px;
+    transition: width 0.4s ease, background-color 0.4s ease;
+}
+
+.strength-fill.weak {
+    width: 33.33%;
+    background-color: #ef4444; /* red */
+}
+
+.strength-fill.medium {
+    width: 66.66%;
+    background-color: #f59e0b; /* amber */
+}
+
+.strength-fill.strong {
+    width: 100%;
+    background-color: #10b981; /* emerald */
+}
+
+.strength-text {
+    font-size: 0.75rem;
+    transition: var(--transition);
+}
+
+/* OTP Verification Code Inputs */
+.otp-box {
+    width: 50px;
+    height: 60px;
+    font-size: 1.6rem !important;
+    font-weight: 700 !important;
+    text-align: center !important;
+    padding: 0 !important;
+    border-radius: 12px !important;
+    transition: var(--transition) !important;
+}
+
+.otp-box:focus {
+    transform: scale(1.05);
+}
+
+/* Resend Button styling */
+.btn-link-custom {
+    background: transparent;
+    border: none;
+    color: var(--accent-color);
+    font-weight: 600;
+    text-decoration: none;
+    padding: 0;
+    transition: var(--transition);
+}
+
+.btn-link-custom:hover:not(:disabled) {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+.btn-link-custom:disabled {
+    color: var(--text-secondary);
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.btn-link-back {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    transition: var(--transition);
+    padding: 5px 10px;
+    border-radius: 6px;
+}
+
+.btn-link-back:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* 2FA Error Shake Animation */
+.shake {
+    animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both;
+}
+
+@keyframes shake {
+    10%, 90% { transform: translate3d(-1px, 0, 0); }
+    20%, 80% { transform: translate3d(2px, 0, 0); }
+    30%, 50%, 70% { transform: translate3d(-4px, 0, 0); }
+    40%, 60% { transform: translate3d(4px, 0, 0); }
+}
+
+/* Success Checkmark Animation */
+.success-checkmark {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.checkmark-circle {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: rgba(254, 163, 2, 0.05);
+    border: 3px solid rgba(254, 163, 2, 0.1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.checkmark-icon-glow {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    box-shadow: 0 0 30px rgba(254, 163, 2, 0.4);
+    opacity: 0;
+    animation: glow-pulse 2s infinite 1.2s;
+}
+
+.checkmark-svg {
+    width: 52px;
+    height: 52px;
+    stroke: var(--accent-color);
+    stroke-width: 4;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    fill: none;
+}
+
+.checkmark-circle-path {
+    stroke-dasharray: 166;
+    stroke-dashoffset: 166;
+    stroke-width: 4;
+    stroke-miterlimit: 10;
+    stroke: var(--accent-color);
+    animation: draw-circle 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
+}
+
+.checkmark-check-path {
+    stroke-dasharray: 48;
+    stroke-dashoffset: 48;
+    animation: draw-check 0.4s cubic-bezier(0.65, 0, 0.45, 1) 0.6s forwards;
+}
+
+@keyframes draw-circle {
+    100% { stroke-dashoffset: 0; }
+}
+
+@keyframes draw-check {
+    100% { stroke-dashoffset: 0; }
+}
+
+@keyframes glow-pulse {
+    0% { opacity: 0.2; transform: scale(1); }
+    50% { opacity: 0.6; transform: scale(1.1); }
+    100% { opacity: 0.2; transform: scale(1); }
+}
+
+/* Glassmorphic Custom Toast */
+.custom-toast {
+    background: rgba(22, 27, 34, 0.85) !important;
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(254, 163, 2, 0.2) !important;
+    border-radius: 16px !important;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5) !important;
+    min-width: 320px;
+}
+
+.custom-toast .btn-close {
+    filter: invert(1) grayscale(1) brightness(2);
+}
+
+/* Layout Utilities */
+.min-vh-75 {
+    min-height: 75vh;
+}

@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameStop - Admin Access Selection</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Anta&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap -->
+    <link href="/node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom base styles -->
+    <link href="Style/style_landing.css" rel="stylesheet">
+
+    <link rel="shortcut icon" href="IMG/Logo.ico" type="image/x-icon">
+
+    <style>
+        body {
+            background-color: #05070a;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            overflow-x: hidden;
+        }
+
+        .choice-container {
+            max-width: 900px;
+            width: 100%;
+            padding: 2rem;
+            text-align: center;
+        }
+
+        .main-heading {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            text-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+        }
+
+        .sub-heading {
+            font-size: 1.3rem;
+            color: var(--text-secondary);
+            margin-bottom: 3.5rem;
+        }
+
+        .cards-row {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .mode-card {
+            background: linear-gradient(135deg, rgba(22, 27, 34, 0.8), rgba(12, 16, 23, 0.9));
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 28px;
+            width: 320px;
+            padding: 2rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            position: relative;
+            user-select: none;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+        }
+
+        .mode-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 28px;
+            background: linear-gradient(180deg, rgba(254, 163, 2, 0.1) 0%, rgba(254, 163, 2, 0) 100%);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 0;
+        }
+
+        .mode-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(254, 163, 2, 0.5);
+            box-shadow: 0 20px 40px rgba(254, 163, 2, 0.15);
+        }
+
+        .mode-card.active {
+            border: 3.5px solid var(--accent-color);
+            transform: scale(1.03);
+            box-shadow: 0 0 35px rgba(254, 163, 2, 0.35);
+        }
+
+        .mode-card.active::before {
+            opacity: 1;
+        }
+
+        .card-inner {
+            position: relative;
+            z-index: 1;
+        }
+
+        .logo-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 2rem auto;
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .mode-card:hover .logo-container {
+            transform: scale(1.02);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .mode-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin: 0;
+            transition: var(--transition);
+        }
+
+        .mode-card.active .mode-title {
+            color: var(--accent-color);
+            text-shadow: 0 0 10px rgba(254, 163, 2, 0.3);
+        }
+
+        /* Confirm Button styling */
+        .btn-confirm {
+            background: rgba(22, 27, 34, 0.6);
+            border: 1.5px solid rgba(255, 255, 255, 0.15);
+            color: var(--text-secondary);
+            font-size: 1.15rem;
+            font-weight: 600;
+            padding: 0.75rem 2.5rem;
+            border-radius: 16px;
+            cursor: not-allowed;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        .btn-confirm.ready {
+            background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+            border-color: var(--accent-color);
+            color: #000000;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(254, 163, 2, 0.35);
+        }
+
+        .btn-confirm.ready:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 24px rgba(254, 163, 2, 0.5);
+            background: linear-gradient(135deg, var(--accent-hover), #ffc155);
+        }
+
+        .btn-confirm.ready:active {
+            transform: translateY(0);
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="choice-container">
+        <h1 class="main-heading">Logged in an admin account!</h1>
+        <p class="sub-heading">Please choose where do you want to go:</p>
+
+        <div class="cards-row">
+            <!-- Normal Mode Card -->
+            <div class="mode-card" id="card-normal" onclick="selectMode('normal')">
+                <div class="card-inner">
+                    <div class="logo-container">
+                        <img src="IMG/Logo.png" alt="Normal Mode Logo" class="logo-image">
+                    </div>
+                    <h3 class="mode-title">Normal mode</h3>
+                </div>
+            </div>
+
+            <!-- Admin Mode Card -->
+            <div class="mode-card" id="card-admin" onclick="selectMode('admin')">
+                <div class="card-inner">
+                    <div class="logo-container">
+                        <img src="IMG/Logo.png" alt="Admin Mode Logo" class="logo-image">
+                    </div>
+                    <h3 class="mode-title">Admin mode</h3>
+                </div>
+            </div>
+        </div>
+
+        <button id="btn-confirm" class="btn-confirm" onclick="confirmSelection()">Confirm</button>
+    </div>
+
+    <!-- Bootstrap Bundle JS -->
+    <script src="/node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
+        crossorigin="anonymous"></script>
+
+    <script>
+        let selectedMode = null;
+
+        // Session validation boundary
+        document.addEventListener('DOMContentLoaded', () => {
+            const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
+            const isAdmin = localStorage.getItem('isAdmin') === 'true';
+
+            if (!isLoggedIn || !isAdmin) {
+                // Not authenticated or not an admin, kick back to login
+                window.location.href = 'auth.html';
+            }
+        });
+
+        function selectMode(mode) {
+            selectedMode = mode;
+            
+            // Highlight selected card
+            document.querySelectorAll('.mode-card').forEach(card => card.classList.remove('active'));
+            document.getElementById(`card-${mode}`).classList.add('active');
+
+            // Enable Confirm button
+            const confirmBtn = document.getElementById('btn-confirm');
+            confirmBtn.classList.add('ready');
+            confirmBtn.disabled = false;
+        }
+
+        // Support double-click to navigate immediately
+        document.getElementById('card-normal').addEventListener('dblclick', () => {
+            selectMode('normal');
+            confirmSelection();
+        });
+
+        document.getElementById('card-admin').addEventListener('dblclick', () => {
+            selectMode('admin');
+            confirmSelection();
+        });
+
+        function confirmSelection() {
+            if (!selectedMode) return;
+
+            if (selectedMode === 'normal') {
+                window.location.href = 'landing.html';
+            } else if (selectedMode === 'admin') {
+                window.location.href = 'admin.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

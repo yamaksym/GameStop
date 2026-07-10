@@ -1,0 +1,726 @@
+/* Admin Panel Specific Styles */
+
+:root {
+    --bg-color: #05070a;
+    --bg-secondary: #0c1017;
+    --card-bg: #0c121e;
+    --input-bg: #090e18;
+    --accent-color: #fea302;
+    --accent-hover: #f5ba54;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --danger-color: #d92525;
+    --danger-hover: #ff3b3b;
+    --border-color: rgba(255, 255, 255, 0.06);
+    --transition: all 0.3s ease;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--text-primary);
+    font-family: "Anta", sans-serif;
+}
+
+/* Header & Tabs styling */
+.admin-navbar {
+    background: var(--bg-secondary) !important;
+    border-bottom: 1.5px solid var(--border-color);
+}
+
+.admin-nav-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+.admin-nav-item {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 0.5rem 0;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.admin-nav-item:hover {
+    color: var(--text-primary);
+}
+
+.admin-nav-item.active {
+    color: var(--accent-color);
+}
+
+.admin-nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: -1px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background-color: var(--accent-color);
+    border-radius: 2px;
+    box-shadow: 0 0 10px rgba(254, 163, 2, 0.5);
+}
+
+/* User avatar header image */
+.admin-profile-pic {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 2px solid var(--accent-color);
+    cursor: pointer;
+}
+
+/* Main content wrapper */
+.admin-main {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    min-height: 70vh;
+}
+
+/* Search bar styling */
+.search-container {
+    position: relative;
+    margin-bottom: 2.5rem;
+}
+
+.search-input-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.search-icon {
+    position: absolute;
+    left: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+    pointer-events: none;
+    width: 20px;
+    height: 20px;
+}
+
+.admin-search-input {
+    width: 100%;
+    background-color: var(--input-bg) !important;
+    border: 1px solid rgba(255, 255, 255, 0.08) !important;
+    color: var(--text-primary) !important;
+    padding: 1.1rem 1.2rem 1.1rem 3.2rem !important;
+    border-radius: 14px !important;
+    font-size: 1.1rem !important;
+    transition: var(--transition);
+}
+
+.admin-search-input:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 15px rgba(254, 163, 2, 0.15) !important;
+}
+
+/* Sales Graph Section */
+.chart-container {
+    background-color: var(--card-bg);
+    border: 1.5px solid var(--border-color);
+    border-radius: 20px;
+    padding: 2.5rem;
+    margin-bottom: 2.5rem;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+}
+
+/* Chart Buttons block */
+.chart-buttons-row {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+    margin-bottom: 3rem;
+}
+
+.btn-chart-control {
+    background: var(--accent-color);
+    border: none;
+    color: #000000;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 0.8rem 2.2rem;
+    border-radius: 12px;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(254, 163, 2, 0.2);
+}
+
+.btn-chart-control:hover {
+    background: var(--accent-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(254, 163, 2, 0.4);
+}
+
+.btn-chart-control:active {
+    transform: translateY(0);
+}
+
+/* Lists cards styling */
+.admin-list-item {
+    background-color: transparent;
+    border: none;
+    margin-bottom: 2.5rem;
+    display: flex;
+    align-items: center;
+    gap: 2.5rem;
+    width: 100%;
+}
+
+.item-img-wrapper {
+    width: 180px;
+    height: 250px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.item-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-details {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 0.5rem;
+}
+
+.item-title {
+    font-size: 2.2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.item-meta {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+}
+
+.item-price {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+}
+
+.item-desc {
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    margin: 0.5rem 0 1rem 0;
+    max-width: 600px;
+    line-height: 1.5;
+}
+
+.item-extra {
+    font-size: 1.15rem;
+    color: var(--text-primary);
+    margin-top: 0.5rem;
+}
+
+/* Action Buttons column on the right */
+.item-actions-column {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 180px;
+    flex-shrink: 0;
+}
+
+.btn-admin-action {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-align: center;
+    border: none;
+    transition: var(--transition);
+}
+
+.btn-admin-action.orange {
+    background-color: var(--accent-color);
+    color: #000;
+}
+
+.btn-admin-action.orange:hover {
+    background-color: var(--accent-hover);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(254, 163, 2, 0.3);
+}
+
+.btn-admin-action.grey {
+    background-color: #4b5563;
+    color: var(--text-primary);
+}
+
+.btn-admin-action.grey:hover {
+    background-color: #6b7280;
+    transform: translateX(4px);
+}
+
+.btn-admin-action.red {
+    background-color: var(--danger-color);
+    color: #fff;
+}
+
+.btn-admin-action.red:hover {
+    background-color: var(--danger-hover);
+    transform: translateX(4px);
+    box-shadow: 0 4px 12px rgba(217, 37, 37, 0.4);
+}
+
+/* Banned card state styling */
+.admin-list-item.banned {
+    opacity: 0.5;
+}
+
+.admin-list-item.banned .item-title {
+    text-decoration: line-through;
+}
+
+/* Add Item Floating Action Buttons at Bottom Right */
+.add-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 3rem;
+}
+
+.btn-add-item {
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+    border: none;
+    color: #000;
+    font-size: 1.3rem;
+    font-weight: 700;
+    padding: 1rem 2.2rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    box-shadow: 0 8px 24px rgba(254, 163, 2, 0.4);
+    transition: var(--transition);
+}
+
+.btn-add-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 30px rgba(254, 163, 2, 0.55);
+}
+
+/* User Card Special Styling */
+.user-avatar-wrapper {
+    width: 140px;
+    height: 140px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 3px solid var(--accent-color);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+    flex-shrink: 0;
+}
+
+.user-avatar {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Sub-views and Form views overlay overlay styling */
+.admin-subview {
+    display: none;
+    animation: fadeIn 0.3s ease;
+}
+
+.admin-subview.active {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.subview-header {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 2rem;
+    color: var(--text-primary);
+}
+
+/* Form layouts */
+.form-card-layout {
+    display: flex;
+    gap: 3rem;
+    flex-wrap: wrap;
+    align-items: flex-start;
+}
+
+/* Thumbnail upload placeholder styled card */
+.thumbnail-upload-card {
+    width: 200px;
+    height: 280px;
+    border: 2px dashed var(--accent-color);
+    border-radius: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    background-color: var(--input-bg);
+    transition: var(--transition);
+    overflow: hidden;
+    position: relative;
+}
+
+.thumbnail-upload-card:hover {
+    background-color: rgba(254, 163, 2, 0.05);
+    box-shadow: 0 0 15px rgba(254, 163, 2, 0.1);
+}
+
+.thumbnail-upload-inner {
+    text-align: center;
+    color: var(--accent-color);
+    padding: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.thumbnail-preview {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Inputs styled for forms */
+.form-fields-wrapper {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 650px;
+    width: 100%;
+}
+
+.admin-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.admin-form-input, .admin-form-textarea {
+    background-color: var(--input-bg) !important;
+    border: 1.5px solid rgba(255, 255, 255, 0.08) !important;
+    color: var(--text-primary) !important;
+    padding: 0.95rem 1.2rem !important;
+    border-radius: 12px !important;
+    font-size: 1.05rem !important;
+    transition: var(--transition);
+}
+
+.admin-form-input:focus, .admin-form-textarea:focus {
+    border-color: var(--accent-color) !important;
+    box-shadow: 0 0 12px rgba(254, 163, 2, 0.15) !important;
+}
+
+.admin-form-textarea {
+    min-height: 150px;
+    resize: vertical;
+}
+
+/* Installer file input group container */
+.installer-input-group {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+
+.btn-add-file {
+    background: transparent;
+    border: 1.5px solid var(--accent-color);
+    color: var(--accent-color);
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-add-file:hover {
+    background-color: var(--accent-color);
+    color: #000;
+}
+
+.btn-remove-file {
+    background: transparent;
+    border: 1.5px solid var(--danger-color);
+    color: var(--danger-color);
+    width: 48px;
+    height: 48px;
+    border-radius: 12px;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-remove-file:hover {
+    background-color: var(--danger-color);
+    color: #fff;
+}
+
+/* Form Action Buttons at bottom */
+.form-actions-row {
+    display: flex;
+    gap: 1.5rem;
+    justify-content: flex-end;
+    margin-top: 2.5rem;
+}
+
+.btn-form-cancel {
+    background: transparent;
+    border: 2px solid var(--accent-color);
+    color: var(--text-primary);
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 0.75rem 2.2rem;
+    border-radius: 12px;
+    transition: var(--transition);
+}
+
+.btn-form-cancel:hover {
+    background-color: rgba(254, 163, 2, 0.1);
+    transform: translateY(-2px);
+}
+
+.btn-form-save {
+    background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+    border: none;
+    color: #000;
+    font-size: 1.15rem;
+    font-weight: 700;
+    padding: 0.75rem 2.2rem;
+    border-radius: 12px;
+    transition: var(--transition);
+    box-shadow: 0 4px 12px rgba(254, 163, 2, 0.25);
+}
+
+.btn-form-save:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 18px rgba(254, 163, 2, 0.4);
+}
+
+/* Give license form blocks */
+.give-block-title {
+    font-size: 1.6rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    color: var(--text-primary);
+}
+
+.give-selection-preview {
+    margin-bottom: 2rem;
+    min-height: 120px;
+    background-color: var(--input-bg);
+    border-radius: 14px;
+    border: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+}
+
+/* Search results list dropdown for assignment in overlays */
+.search-results-overlay {
+    position: absolute;
+    width: 100%;
+    background-color: var(--bg-secondary);
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
+    margin-top: 0.5rem;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.5);
+    display: none;
+}
+
+.search-results-overlay.active {
+    display: block;
+}
+
+.overlay-item {
+    padding: 0.8rem 1.2rem;
+    cursor: pointer;
+    transition: var(--transition);
+    border-bottom: 1px solid rgba(255,255,255,0.03);
+}
+
+.overlay-item:hover {
+    background-color: rgba(254, 163, 2, 0.1);
+    color: var(--accent-color);
+}
+
+/* Bottom Navigation Footer bar */
+.admin-footer {
+    background-color: var(--bg-secondary);
+    border-top: 1.5px solid var(--border-color);
+    padding: 3rem 1.5rem;
+    margin-top: 5rem;
+}
+
+.admin-footer-nav {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+    margin-bottom: 0rem;
+    flex-wrap: wrap;
+}
+
+.admin-footer-link {
+    font-size: 1.7rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.admin-footer-link:hover {
+    color: var(--accent-color);
+    text-shadow: 0 0 10px rgba(254, 163, 2, 0.3);
+}
+
+/* User owned inventory modal/card list */
+.user-inventory-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0,0,0,0.75);
+    backdrop-filter: blur(8px);
+    z-index: 1000;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+}
+
+.user-inventory-modal.active {
+    display: flex;
+}
+
+.modal-content-card {
+    background-color: var(--bg-secondary);
+    border: 1.5px solid var(--accent-color);
+    border-radius: 24px;
+    width: 100%;
+    max-width: 600px;
+    max-height: 80vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 50px rgba(254, 163, 2, 0.15);
+    overflow: hidden;
+}
+
+.modal-header {
+    padding: 1.5rem 2rem;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.modal-close-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.modal-close-btn:hover {
+    color: var(--text-primary);
+}
+
+.modal-body {
+    padding: 2rem;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.modal-inventory-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.modal-inventory-item {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    background: rgba(255,255,255,0.02);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    padding: 0.8rem;
+}
+
+.modal-item-img {
+    width: 60px;
+    height: 80px;
+    border-radius: 8px;
+    object-fit: cover;
+}
+
+.modal-item-info {
+    flex-grow: 1;
+}
+
+.modal-item-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin: 0;
+}
+
+.modal-item-genre {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+.btn-remove-inventory {
+    background: transparent;
+    border: 1px solid var(--danger-color);
+    color: var(--danger-color);
+    padding: 0.4rem 0.8rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.btn-remove-inventory:hover {
+    background-color: var(--danger-color);
+    color: #fff;
+}

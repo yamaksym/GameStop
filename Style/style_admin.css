@@ -137,7 +137,6 @@ body {
 .chart-buttons-row {
     display: flex;
     gap: 1.5rem;
-    justify-content: flex-start;
     flex-wrap: wrap;
     margin-bottom: 3rem;
 }
