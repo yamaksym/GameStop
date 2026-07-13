@@ -81,7 +81,7 @@ app.use(helmet({
 /* ── CORS ────────────────────────────────── */
 const allowedOrigins = [
   IS_PROD
-    ? (process.env.FRONTEND_URL || 'https://gamestop.pp.ua')
+    ? (process.env.FRONTEND_URL || 'https://gamestop.netlify.app')
     : 'http://localhost:3000',
   'http://127.0.0.1:3000',
 ].filter(Boolean);
